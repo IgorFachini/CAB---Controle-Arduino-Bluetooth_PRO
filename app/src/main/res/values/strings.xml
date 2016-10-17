@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CAB-Controle Arduino BluetoothPRO</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="sobre_app">Grupo de Robótica da Cátolica de Santa Catarina</string>
+    <string name="action_settings">Salvar e Voltar</string>
+    <string name="title_activity_values_bottons">Valores dos botoes</string>
+    <string name="title_activity_paired_devices">Dispositivos pareados</string>
+    <string name="joystick_bt_connect">Conectar</string>
+    <string name="title_activity_info_fragment">InfoFragment</string>
+    <string name="Dados_arduino">Dados arduino na tela</string>
+    <string name="sobre_app_botao">Sobre o app</string>
+    <string name="Valores_botoes">Valores dos Botoes</string>
+    <string name="title_activity_velocidade">Velocidade</string>
+    <string name="title_activity_values__joystick">Values_Joystick</string>
+    <string name="Modos">Modos</string>
+    <string name="TipoDeControle">De controle</string>
+    <string name="Extras">Extras</string>
+    <string name="modo_botoes">Modo botoes</string>
+    <string name="modo_joystick">Modo JoyStick</string>
+    <string name="title_activity_inicializador">Inicializador</string>
+    <string name="velocidade">Nivel</string>
+    <string name="Direcoes8">8 Direções</string>
+    <string name="title_activity_extras_seguidor">Extras_seguidor</string>
+
+</resources>

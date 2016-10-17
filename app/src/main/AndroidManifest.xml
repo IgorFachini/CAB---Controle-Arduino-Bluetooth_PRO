@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.appbrinquedoopeniot"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="22" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher_pro"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Holo.Light" >
+        <activity
+            android:name=".Inicializador"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ModoBotoes"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".Values_bottons"
+            android:label="@string/title_activity_values_bottons" >
+        </activity>
+        <activity
+            android:name=".PairedDevices"
+            android:label="@string/title_activity_paired_devices" >
+        </activity>
+        <activity
+            android:name=".InfoFragment"
+            android:label="@string/title_activity_info_fragment" >
+        </activity>
+        <activity
+            android:name=".Values_joyStick"
+            android:label="@string/title_activity_velocidade" >
+        </activity>
+        <activity
+            android:name=".ModoJoyStick"
+            android:label="Joy" >
+        </activity>
+        <activity
+            android:name=".Values_Joystick"
+            android:label="@string/title_activity_values__joystick" >
+        </activity>
+        <activity
+            android:name=".Extras_seguidor"
+            android:label="@string/title_activity_extras_seguidor" >
+        </activity>
+    </application>
+
+</manifest>

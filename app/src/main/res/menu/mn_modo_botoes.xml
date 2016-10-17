@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/actModos"
+        android:title="@string/Modos"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/actModoJoystick"
+                android:title="@string/modo_joystick"/>
+            <item
+                android:id="@+id/actSeguidor"
+                android:title="Seguidor"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/actValores"
+        android:title="@string/Valores_botoes"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/actDadosArduino"
+        android:title="@string/Dados_arduino"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/actMostrarOcultar"
+                android:title=""/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/actSobreApp"
+        android:title="@string/sobre_app_botao"
+        app:showAsAction="never"/>
+
+</menu>
