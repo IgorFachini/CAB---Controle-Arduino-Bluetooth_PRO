@@ -22,16 +22,16 @@ public class InfoFragment extends DialogFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.activity_info_fragment, container, true);
-		getDialog().setTitle("Sobre o aplicativo");
+		getDialog().setTitle(getResources().getString(R.string.sobre_app_botao));
 		// Do something else
 
 		facebookBtn =(Button)rootView.findViewById(R.id.facebookBtn);
 		googleBtn =(Button)rootView.findViewById(R.id.googleBtn);
 		googlePlayBtn =(Button)rootView.findViewById(R.id.googlePlayBtn);
 		
-		facebookBtn.setOnClickListener(new chamarPagina(linkFacebook,"Grupo catolica"));
-		googleBtn.setOnClickListener(new chamarPagina(linkGmail,"Desenvolvedor do app"));
-		googlePlayBtn.setOnClickListener(new chamarPagina(linkGooglePlay,"Pagina do site da Catolica"));
+		facebookBtn.setOnClickListener(new chamarPagina(linkFacebook,getResources().getString(R.string.grupoCatolicaFace)));
+		googleBtn.setOnClickListener(new chamarPagina(linkGmail,getResources().getString(R.string.desenvolvedorApp)));
+		googlePlayBtn.setOnClickListener(new chamarPagina(linkGooglePlay,getResources().getString(R.string.paginaSiteDaCatolica)));
 			
 		
 		
@@ -56,7 +56,7 @@ public class InfoFragment extends DialogFragment {
 		@Override
 		public void onClick(View v) {
 			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-			startActivity(Intent.createChooser(intent, "Escolha seu navegador |" + mensagem));
+			startActivity(Intent.createChooser(intent, getResources().getString(R.string.escolha) + mensagem));
 		}
 		
 	}

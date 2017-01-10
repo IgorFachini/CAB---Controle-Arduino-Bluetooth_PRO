@@ -3,18 +3,24 @@
 
     <string name="app_name">CAB-Controle Arduino BluetoothPRO</string>
     <string name="hello_world">Hello world!</string>
+    <string name="grupoCatolicaFace">Grupo Catolica SC</string>
+    <string name="desenvolvedorApp">Desenvolvedor do app</string>
+    <string name="paginaSiteDaCatolica">Pagina do site da Catolica</string>
     <string name="sobre_app">Grupo de Robótica da Cátolica de Santa Catarina</string>
+    <string name="escolha">Escolha seu navegador |</string>
     <string name="action_settings">Salvar e Voltar</string>
     <string name="title_activity_values_bottons">Valores dos botoes</string>
     <string name="title_activity_paired_devices">Dispositivos pareados</string>
     <string name="joystick_bt_connect">Conectar</string>
     <string name="title_activity_info_fragment">InfoFragment</string>
-    <string name="Dados_arduino">Dados arduino na tela</string>
+    <string name="Dados_arduino">Dados arduino na tela >></string>
+    <string name="dadosVisiveis">Dados visiveis</string>
+    <string name="dadosInvisivel">Dados invisiveis</string>
     <string name="sobre_app_botao">Sobre o app</string>
     <string name="Valores_botoes">Valores dos Botoes</string>
     <string name="title_activity_velocidade">Velocidade</string>
     <string name="title_activity_values__joystick">Values_Joystick</string>
-    <string name="Modos">Modos</string>
+    <string name="Modos">Modos >></string>
     <string name="TipoDeControle">De controle</string>
     <string name="Extras">Extras</string>
     <string name="modo_botoes">Modo botoes</string>
@@ -23,5 +29,29 @@
     <string name="velocidade">Nivel</string>
     <string name="Direcoes8">8 Direções</string>
     <string name="title_activity_extras_seguidor">Extras_seguidor</string>
+    <string name="precisa_ativar_bluetooth">Vocé precisa ativar o bluetooth</string>
+    <string name="ativeBluetooth">Ative o bluetooth</string>
+    <string name="bluetooth_ativado">Bluetooth Ativado XD</string>
+    <string name="mudanca_salvas">Mudanças Salvas</string>
+    <string name="mudancas_nao_Salvas">Mundaças não salvas!</string>
+    <string name="conectando">Conectando...</string>
+    <string name="conectado">Conectado</string>
+    <string name="conectar">Conectar</string>
+    <string name="desconectado">Desconectado</string>
+    <string name="desconectar">Desconectar</string>
+    <string name="falhaNaConexao">Falha ao conectar</string>
+    <string name="dispostivoNaoPossuiBluetooth">Dispostivo nao possui Bluetooth</string>
+    <string name="nenhumDispositivoSelecionado">Nenhum dispositivo Selecionado</string>
+    <string name="numerosMaximosDeLinhasUltrapassado">Numeros maximos de linhas ultrapassado!!!!</string>
+    <string name="mostrar">Mostrar</string>
+    <string name="ocultar">Ocultar</string>
+    <string name="sair">Sair</string>
+    <string name="direcao">"Direção: "</string>
+    <string name="nivel">"Nivel: "</string>
+    <string name="baixo">Baixo</string>
+    <string name="medio">Medio</string>
+    <string name="alto">Alto</string>
+    <string name="timer">(00:00)</string>
+    <string name="cima">cima</string>
 
 </resources>

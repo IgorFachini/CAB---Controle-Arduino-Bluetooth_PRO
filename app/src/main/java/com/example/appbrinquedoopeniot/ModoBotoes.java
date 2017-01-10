@@ -1,25 +1,23 @@
 package com.example.appbrinquedoopeniot;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.view.ViewAnimationUtils;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -74,7 +72,9 @@ public class ModoBotoes extends FragmentActivity {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 		setContentView(R.layout.activity_modo_botoes);
 		ActionBar ab = getActionBar();
-		ab.setDisplayHomeAsUpEnabled(true);
+		if (ab != null) {
+			ab.setDisplayHomeAsUpEnabled(true);
+		}
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		Value_Bottons = new Intent(this, Values_bottons.class);
@@ -84,15 +84,15 @@ public class ModoBotoes extends FragmentActivity {
 
 		// Vereficamos se o aparelho possui adaptador Bluetooth
 
-		
+        referenciarElementosTela();
 		interromperBluetooth();
 		resgatarValoresBotoes();
-		referenciarElementosTela();
+
 		
 	}
 
 	public void referenciarElementosTela() {
-		dados = (View) findViewById(R.id.FundoDados);
+		dados = findViewById(R.id.FundoDados);
 		txtArduino01 = (TextView) findViewById(R.id.txtArduino01);
 		txtArduino02 = (TextView) findViewById(R.id.txtArduino02);
 		txtArduino03 = (TextView) findViewById(R.id.txtArduino03);
@@ -131,7 +131,7 @@ public class ModoBotoes extends FragmentActivity {
 	
 	public void interromperBluetooth(){
 		if(btt != null){
-			btnConectar.setText("Conectar");
+			btnConectar.setText(getResources().getString(R.string.conectar));
 			btnConectar.setEnabled(true);
 			btt.interrupt();
 			btt.disconnect();
@@ -143,8 +143,7 @@ public class ModoBotoes extends FragmentActivity {
 	public void connectButtonPressed(View v) {
 
 		if (bluetoothPadrao == null) {
-			Toast.makeText(getApplicationContext(), "Dispostivo nao possui Bluetooth", Toast.LENGTH_LONG).show();
-
+			showTextWithColorRed(getResources().getString(R.string.dispostivoNaoPossuiBluetooth));
 		} else {
 			if (!bluetoothPadrao.isEnabled()) {
 
@@ -157,25 +156,26 @@ public class ModoBotoes extends FragmentActivity {
 		}
 
 	}
-	
-	
+
+
 	public void reconect(View v) {
+
 		if (!bluetoothPadrao.isEnabled()) {
-			Toast.makeText(getApplicationContext(), "Ative o bluetooth", Toast.LENGTH_LONG).show();
+			showToast(getResources().getString(R.string.ativeBluetooth));
 		} else {
-			btnConectar.setText("Conectando...");
+			btnConectar.setText(getResources().getString(R.string.conectando));
 			btnConectar.setEnabled(false);
 			try {
 				interromperBluetooth();
-				Thread.sleep(1000);
+//				Thread.sleep(1000);
 				connectWithBluetooth(RESULT_OK);
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-	}
 
+	}
 
 	public void acaoDosBotoes() {
 		btnFrente.setOnTouchListener(new BotaoListener(frente));
@@ -194,7 +194,7 @@ public class ModoBotoes extends FragmentActivity {
 
 		private String mensagem;
 
-		public BotaoListener(String mensagem) {
+		BotaoListener(String mensagem) {
 			super();
 			this.mensagem = mensagem;
 		}
@@ -212,9 +212,10 @@ public class ModoBotoes extends FragmentActivity {
 					msg.obj = conteudoAVoltar;
 					writeHandler.sendMessage(msg);
 				}
-			} else {
-				// Bluetooth nao conectado
 			}
+//			else {
+//				// Bluetooth nao conectado
+//			}
 			return false;
 		}
 
@@ -226,50 +227,51 @@ public class ModoBotoes extends FragmentActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
 
-		// Retrono do pedido de ativação do Bluetooth
-		case REQUEST_ENABLE_BT:
+			// Retorno do pedido de ativação do Bluetooth
+			case REQUEST_ENABLE_BT:
 
-			if (resultCode == Activity.RESULT_OK) {
-				Toast.makeText(getApplicationContext(), "Bluetooth Ativado XD", Toast.LENGTH_LONG).show();
-				listaDeDispositivos();
-			} else {
-				Toast.makeText(getApplicationContext(), "Voçe precisa ativar o bluetooth ", Toast.LENGTH_LONG).show();
+				if (resultCode == Activity.RESULT_OK) {
+					showTextWithColorGreen(getResources().getString(R.string.bluetooth_ativado));
+					listaDeDispositivos();
+				} else {
+					showTextWithColorRed(getResources().getString(R.string.precisa_ativar_bluetooth));
+				}
+				break;
+			case SELECT_PAIRED_DEVICE:
+				connectWithBluetooth(resultCode);
+				break;
+			case VALORES:
+				if (resultCode == RESULT_OK) {
+					showTextWithColorGreen(getResources().getString(R.string.mudanca_salvas));
+					frente = data.getStringExtra("frente");
+					direita = data.getStringExtra("direita");
+					esquerda = data.getStringExtra("esquerda");
+					tras = data.getStringExtra("tras");
+					x = data.getStringExtra("x");
+					y = data.getStringExtra("y");
+					z = data.getStringExtra("z");
+					a = data.getStringExtra("a");
+					b = data.getStringExtra("b");
+					c = data.getStringExtra("c");
+					conteudoAVoltar = data.getStringExtra("conteudoAVoltar");
+					salvarValores();
+				} else {
+					showTextWithColorRed(getResources().getString(R.string.mudancas_nao_Salvas));
+				}
 
-			}
-			break;
-		case SELECT_PAIRED_DEVICE:
-			connectWithBluetooth(resultCode);
-			
-			break;
-		case VALORES:
-			if (resultCode == RESULT_OK) {
-				Toast.makeText(getApplicationContext(), "Mudanças salvas", Toast.LENGTH_LONG).show();
-				frente = data.getStringExtra("frente");
-				direita = data.getStringExtra("direita");
-				esquerda = data.getStringExtra("esquerda");
-				tras = data.getStringExtra("tras");
-				x = data.getStringExtra("x");
-				y = data.getStringExtra("y");
-				z = data.getStringExtra("z");
-				a = data.getStringExtra("a");
-				b = data.getStringExtra("b");
-				c = data.getStringExtra("c");
-				conteudoAVoltar = data.getStringExtra("conteudoAVoltar");
-			} else {
-				Toast.makeText(getApplicationContext(), "Mudanças nao salvas", Toast.LENGTH_LONG).show();
-			}
-
-			break;
+				break;
 		}
-	};
+	}
+
+
+
+
 
 	private void connectWithBluetooth(int resultCode) {
 		SharedPreferences configDevice = getSharedPreferences(PREFS_NAME_BlUETOOTH, MODE_PRIVATE);
 		if (resultCode == RESULT_OK) {
-			btnConectar = (Button) findViewById(R.id.btnConectar);
 			if (btt == null) {
-
-				btt = new BluetoothThread(configDevice.getString("btDevAddress",""), new Handler() {
+				btt = new BluetoothThread(configDevice.getString("btDevAddress", ""), new Handler() {
 
 					@Override
 					public void handleMessage(Message message) {
@@ -279,84 +281,76 @@ public class ModoBotoes extends FragmentActivity {
 						String textoB[] = s.split(";");
 
 						// Do something with the message
-						if (s.equals("CONNECTED")) {
-							btnConectar.setText("Desconectar");
-							btnConectar.setEnabled(true);
-							Toast.makeText(getApplicationContext(), "Conectado", Toast.LENGTH_LONG).show();
+                        switch (s) {
+                            case "CONNECTED":
+                                btnConectar.setText(getResources().getString(R.string.desconectar));
+                                btnConectar.setEnabled(true);
+                                showTextWithColorGreen(getResources().getString(R.string.conectado));
+                                break;
+                            case "DISCONNECTED":
+                                showToast(getResources().getString(R.string.desconectado));
+                                interromperBluetooth();
+                                break;
+                            case "CONNECTION FAILED":
+                                showTextWithColorRed(getResources().getString(R.string.falhaNaConexao));
+                                interromperBluetooth();
+                                break;
+                            default:
 
-							// ativado = true;
-						} else if (s.equals("DISCONNECTED")) {
+                                loop:
+                                for (int i = 0; i < textoB.length; i++) {
+                                    switch (i) {
+                                        case 0:
+                                            txtArduino01.setText(textoB[0]);
+                                            break;
+                                        case 1:
+                                            txtArduino02.setText(textoB[1]);
+                                            break;
+                                        case 2:
+                                            txtArduino03.setText(textoB[2]);
+                                            break;
+                                        case 3:
+                                            txtArduino04.setText(textoB[3]);
+                                            break;
+                                        case 4:
+                                            txtArduino05.setText(textoB[4]);
+                                            break;
+                                        case 5:
+                                            txtArduino06.setText(textoB[5]);
+                                            break;
+                                        case 6:
+                                            txtArduino07.setText(textoB[6]);
+                                            break;
+                                        default:
+                                            if (imprimir) {
+                                                showTextWithColorRed(getResources().getString(R.string.numerosMaximosDeLinhasUltrapassado));
+                                                imprimir = false;
+                                            }
 
-							Toast.makeText(getApplicationContext(), "Desconectado", Toast.LENGTH_LONG).show();
-							btnConectar.setText("Conectar");
-							interromperBluetooth();
-							//btt = null;
-							btnConectar.setEnabled(true);
-						} else if (s.equals("CONNECTION FAILED")) {
-							Toast.makeText(getApplicationContext(), "Falha na conexao", Toast.LENGTH_LONG).show();
-							btnConectar.setText("Conectar");
-							interromperBluetooth();
-							//btt = null;
-							btnConectar.setEnabled(true);
-						} else {
-
-							loop: for (int i = 0; i < textoB.length; i++) {
-								switch (i) {
-								case 0:
-									txtArduino01.setText(textoB[0]);
-									break;
-								case 1:
-									txtArduino02.setText(textoB[1]);
-									break;
-								case 2:
-									txtArduino03.setText(textoB[2]);
-									break;
-								case 3:
-									txtArduino04.setText(textoB[3]);
-									break;
-								case 4:
-									txtArduino05.setText(textoB[4]);
-									break;
-								case 5:
-									txtArduino06.setText(textoB[5]);
-									break;
-								case 6:
-									txtArduino07.setText(textoB[6]);
-									break;
-								default:
-									if (imprimir) {
-										Toast.makeText(getApplicationContext(),
-												"Numeros maximos de linhas ultrapassado!!!!!!!", Toast.LENGTH_LONG)
-												.show();
-										imprimir = false;
-									}
-
-									break loop;
-								}
-							}
-						}
+                                            break loop;
+                                    }
+                                }
+                                break;
+                        }
 					}
 				});
 			}
-
-			if (btt != null) {
+            if(btt != null){
 				// Get the handler that is used to send messages
 				writeHandler = btt.getWriteHandler();
 
 				// Run the thread
 				btt.start();
 
-				btnConectar.setText("Conectando...");
+				btnConectar.setText(getResources().getString(R.string.conectando));
 				btnConectar.setEnabled(false);
 			}
 			// break;
 
 		} else {
-			Toast.makeText(getApplicationContext(), "Nenhum dispositivo Selecionado", Toast.LENGTH_LONG).show();
+			showToast(getResources().getString(R.string.nenhumDispositivoSelecionado));
 		}
-		
 	}
-
 	private MenuItem btiMostrarDados;
 
 	@Override
@@ -366,7 +360,7 @@ public class ModoBotoes extends FragmentActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.mn_modo_botoes, menu);
 		btiMostrarDados = menu.findItem(R.id.actMostrarOcultar);
-		btiMostrarDados.setTitle("Mostrar");
+		btiMostrarDados.setTitle(getResources().getString(R.string.mostrar));
 		return true;
 	}
 
@@ -377,7 +371,7 @@ public class ModoBotoes extends FragmentActivity {
 
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			Toast.makeText(this, "Sair", Toast.LENGTH_SHORT).show();
+			showToast(getResources().getString(R.string.sair));
 
 			interromperBluetooth();
 			//this.finishAndRemoveTask();
@@ -424,8 +418,8 @@ public class ModoBotoes extends FragmentActivity {
 				txtArduino05.setVisibility(View.VISIBLE);
 				txtArduino06.setVisibility(View.VISIBLE);
 				txtArduino07.setVisibility(View.VISIBLE);
-				Toast.makeText(getApplicationContext(), "Dados visiveis", Toast.LENGTH_LONG).show();
-				btiMostrarDados.setTitle("Ocultar");
+				showToast(getResources().getString(R.string.dadosVisiveis));
+				btiMostrarDados.setTitle(getResources().getString(R.string.ocultar));
 				mostrarDados = false;
 
 				
@@ -439,8 +433,8 @@ public class ModoBotoes extends FragmentActivity {
 				txtArduino05.setVisibility(View.INVISIBLE);
 				txtArduino06.setVisibility(View.INVISIBLE);
 				txtArduino07.setVisibility(View.INVISIBLE);
-				Toast.makeText(getApplicationContext(), "Dados invisiveis", Toast.LENGTH_LONG).show();
-				btiMostrarDados.setTitle("Mostrar");
+				showToast(getResources().getString(R.string.dadosInvisivel));
+				btiMostrarDados.setTitle(getResources().getString(R.string.mostrar));
 				mostrarDados = true;
 			}
 
@@ -453,15 +447,38 @@ public class ModoBotoes extends FragmentActivity {
 		}
 
 		return true;
-	};
+	}
 
-	@Override
+    @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
+    }
+
+	private void salvarValores() {
+
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putString("frente", frente);
+		editor.putString("direita", direita);
+		editor.putString("esquerda", esquerda);
+		editor.putString("tras", tras);
+		editor.putString("x", x);
+		editor.putString("y", y);
+		editor.putString("z", z);
+		editor.putString("a", a);
+		editor.putString("b", b);
+		editor.putString("c", c);
+		editor.putString("conteudoAVoltar", conteudoAVoltar);
+
+		// Confirma a gravação dos dados
+		editor.apply();
+
+		SharedPreferences configInicializador = getSharedPreferences(PREFS_NAME_CLOSE, MODE_PRIVATE);
+		SharedPreferences.Editor editorInicializador = configInicializador.edit();
+
+		editorInicializador.putInt("inicializar", 1);
+		editorInicializador.apply();
 	}
 	
 	public void resgatarValoresBotoes() {
@@ -482,53 +499,61 @@ public class ModoBotoes extends FragmentActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-
-		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putString("frente", frente);
-		editor.putString("direita", direita);
-		editor.putString("esquerda", esquerda);
-		editor.putString("tras", tras);
-		editor.putString("x", x);
-		editor.putString("y", y);
-		editor.putString("z", z);
-		editor.putString("a", a);
-		editor.putString("b", b);
-		editor.putString("c", c);
-		editor.putString("conteudoAVoltar", conteudoAVoltar);
-
-		// Confirma a gravação dos dados
-		editor.commit();
-		
-		SharedPreferences configInicializador = getSharedPreferences(PREFS_NAME_CLOSE, MODE_PRIVATE);
-		SharedPreferences.Editor editorInicializador = configInicializador.edit();
-		
-		editorInicializador.putInt("inicializar", 1);
-		editorInicializador.commit();
+		salvarValores();
 	}
 	
 	@Override
     public void onBackPressed() {
     	interromperBluetooth();
     	finish();
-    };
+    }
 
-	@Override
+    @Override
 	public void onResume() {
 		super.onResume();
 		acaoDosBotoes();
-	}
-	
-	@Override
-	public void onStop() {
-		super.onStop();;
-		
+		resgatarValoresBotoes();
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		interromperBluetooth();
+	}
+
+	public void showToast(final String mensagem){
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				Toast.makeText(getApplicationContext(),mensagem,Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+
+	//Usado para mostras as mensagens em vermelho.
+	public void showTextWithColorRed(final String mensagem){
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				Toast toast = Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT);
+				TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+				v.setTextColor(Color.RED);
+				toast.show();
+			}
+		});
+
+	}
+	//Usado para mostras as mensagens em verde.
+	public void showTextWithColorGreen(final String mensagem){
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				Toast toast = Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT);
+				TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+				v.setTextColor(Color.GREEN);
+				toast.show();
+			}
+		});
 	}
 
 }

@@ -4,16 +4,16 @@
     android:layout_height="match_parent"
     android:background="@drawable/circuit" >
 
-    <TextView
-        android:id="@+id/lblDirecao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_margin="5dp"
-        android:text="Direção"
-        android:textColor="@color/BlueViolet"
-        android:textSize="20dp" />
+    <!--<TextView-->
+        <!--android:id="@+id/lblDistancia"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:text="distancia"-->
+        <!--android:textColor="@color/BlueViolet"-->
+        <!--android:textSize="20dp" />-->
 
     <TextView
         android:id="@+id/lblNivel"
@@ -22,7 +22,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
-        android:text="Nivel "
+        android:text="@string/nivel"
         android:textColor="@color/Blue"
         android:textSize="20dp" />
 
@@ -60,11 +60,11 @@
         <!-- android:textSize="20dp" /> -->
 
         <TextView
-            android:id="@+id/lblDistancia"
+            android:id="@+id/lblDirecao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:text="Distancia"
+            android:text="@string/direcao"
             android:textColor="@color/Blue"
             android:textSize="20dp" />
 

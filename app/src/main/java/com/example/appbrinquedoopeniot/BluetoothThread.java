@@ -31,7 +31,7 @@ import java.util.UUID;
  *           Handler writeHandler = t.getWriteHandler(); t.start();
  */
 @SuppressLint({ "DefaultLocale", "HandlerLeak" })
-public class BluetoothThread extends Thread {
+class BluetoothThread extends Thread {
 	
 
 	// Tag for logging
@@ -48,7 +48,7 @@ public class BluetoothThread extends Thread {
 
 	// BluetoothSocket é um ponto de conexão que permite trocar dados com outro
 	// disposivo bleutooth atravs do ImputStream() e OutputStream()
-	public BluetoothSocket socket;
+	private BluetoothSocket socket;
 
 	// BluetoothSocket é um ponto de conexão que permite trocar dados com outro
 	// disposivo bleutooth atravs do ImputStream() e OutputStream()
@@ -67,7 +67,7 @@ public class BluetoothThread extends Thread {
 	 * e um Handler para as mensagens recebidas.
 	 *
 	 */
-	public BluetoothThread(String address, Handler handler) {
+	BluetoothThread(String address, Handler handler) {
 
 		this.address = address.toUpperCase();
 		this.readHandler = handler;
@@ -84,7 +84,7 @@ public class BluetoothThread extends Thread {
 	 * Devolve o manipulador(Handler) de escrita para a conexão. As mensagens
 	 * recebidas por este manipulador(handler) sera escrito no Bluetooth socket.
 	 */
-	public Handler getWriteHandler() {
+	Handler getWriteHandler() {
 		return writeHandler;
 	}
 
@@ -123,7 +123,7 @@ public class BluetoothThread extends Thread {
 	/**
 	 * Disconnect the streams and socket.
 	 */
-	public void disconnect() {
+	void disconnect() {
 
 		//if (inStream != null) {
 			try {

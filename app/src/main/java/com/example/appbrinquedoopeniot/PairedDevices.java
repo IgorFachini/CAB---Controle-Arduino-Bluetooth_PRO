@@ -16,6 +16,11 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 public class PairedDevices extends ListActivity {
@@ -28,7 +33,7 @@ public class PairedDevices extends ListActivity {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		/*
-		 * Esse trecho não é essencial, mas da um melhor visual a  lista.
+		 * Esse trecho n?o ? essencial, mas da um melhor visual a  lista.
 		 * Adiciona um titulo a lista de dispositivos pareados utilizando o
 		 * layout text_header.xml.
 		 */
@@ -43,7 +48,18 @@ public class PairedDevices extends ListActivity {
 		 * pareados.
 		 */
 		BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-		Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
+        List<BluetoothDevice> pairedDevices = new LinkedList<BluetoothDevice>(btAdapter.getBondedDevices());
+
+        //Comparador usado para ordenar uma lista em ordem alfabetica
+        Comparator<BluetoothDevice> ALPHABETIC_ORDER = new Comparator<BluetoothDevice>() {
+            @Override
+            public int compare(BluetoothDevice device1, BluetoothDevice device2) {
+                return device1.getName().compareTo(device2.getName());
+            }
+        };
+        //Ordena a lista em ordem Alfabetica
+        Collections.sort(pairedDevices, ALPHABETIC_ORDER);
+
 
 		/*
 		 * Cria um modelo para a lista e o adiciona a  tela. Se houver
@@ -85,8 +101,8 @@ public class PairedDevices extends ListActivity {
 		SharedPreferences.Editor editorDevice = configDevice.edit();
 		editorDevice.putString("btDevAddress", devAddress);
 		editorDevice.commit();
-		
-		
+
+
 		setResult(RESULT_OK, returnIntent);
 		finish();
 	}
@@ -120,7 +136,7 @@ public class PairedDevices extends ListActivity {
 
 		// noinspection SimplifiableIfStatement
 		if (id == R.id.home) {
-			
+
 			finish();
 			return true;
 		}

@@ -1,26 +1,24 @@
 package com.example.appbrinquedoopeniot;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.text.InputFilter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -29,14 +27,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 @SuppressLint({ "HandlerLeak", "ClickableViewAccessibility", "WorldWriteableFiles", "NewApi" })
-public class Extras_seguidor extends FragmentActivity {
+public class Extras_seguidor extends FragmentActivity{
 
 	String frente, direita, esquerda, tras, x, y, z, a, b, c, conteudoAVoltar;
 	Button btnParar, btnConectar, btnFrente, btnDireita, btnEsquerda, btnTras, btn1, btn2, btn3, btn4, btn5, btn6;
 	TextView txtArduino01, txtArduino02, txtArduino03, txtArduino04, txtArduino05, txtArduino06, txtArduino07;
 	View dados;
-	EditText txtMaxInverse, txtProporcinalValue, txtMax, txtTempo, txtWeight1, txtWeight2, txtWeight3, txtWeight4,
+	EditText txtVTS,txtMaxInverse, txtProporcinalValue, txtMax, txtTempo, txtWeight1, txtWeight2, txtWeight3, txtWeight4,
 			txtLinhaReta;
 	EditText txtMaxInverse2, txtProporcinalValue2, txtMax2, txtTempo2, txtWeight12, txtWeight22, txtWeight32, txtWeight42,
 	txtLinhaReta2;
@@ -50,6 +49,7 @@ public class Extras_seguidor extends FragmentActivity {
 	public static final String PREFS_NAME_CLOSE = "inicializador";
 
 	Intent Value_Bottons;
+
 
 	BluetoothThread btt;
 	Handler writeHandler;
@@ -69,7 +69,8 @@ public class Extras_seguidor extends FragmentActivity {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 		setContentView(R.layout.activity_extras_seguidor);
 		ActionBar ab = getActionBar();
-		ab.setDisplayHomeAsUpEnabled(true);
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -83,7 +84,7 @@ public class Extras_seguidor extends FragmentActivity {
 	}
 
 	public void referenciarElementosTela() {
-		dados = (View) findViewById(R.id.FundoDados);
+		dados = findViewById(R.id.FundoDados);
 		txtArduino01 = (TextView) findViewById(R.id.txtArduino01);
 		txtArduino02 = (TextView) findViewById(R.id.txtArduino02);
 		txtArduino03 = (TextView) findViewById(R.id.txtArduino03);
@@ -102,6 +103,7 @@ public class Extras_seguidor extends FragmentActivity {
 		btn4 = (Button) findViewById(R.id.bt_a);
 		btn5 = (Button) findViewById(R.id.bt_b);
 		btn6 = (Button) findViewById(R.id.bt_c);
+        txtVTS = (EditText) findViewById(R.id.txtVTS);
 		txtMaxInverse = (EditText) findViewById(R.id.txtMaxInverse);
 		txtProporcinalValue = (EditText) findViewById(R.id.txtProporcionalValue);
 		txtTempo = (EditText) findViewById(R.id.txtTempo);
@@ -154,7 +156,7 @@ public class Extras_seguidor extends FragmentActivity {
 
 	public void interromperBluetooth() {
 		if (btt != null) {
-			btnConectar.setText("Conectar");
+			btnConectar.setText(getResources().getString(R.string.conectar));
 			btnConectar.setEnabled(true);
 			btt.interrupt();
 			btt.disconnect();
@@ -167,8 +169,7 @@ public class Extras_seguidor extends FragmentActivity {
 	public void connectButtonPressed(View v) {
 
 		if (bluetoothPadrao == null) {
-			Toast.makeText(getApplicationContext(), "Dispostivo nao possui Bluetooth", Toast.LENGTH_LONG).show();
-
+            showTextWithColorRed(getResources().getString(R.string.dispostivoNaoPossuiBluetooth));
 		} else {
 			if (!bluetoothPadrao.isEnabled()) {
 
@@ -185,15 +186,15 @@ public class Extras_seguidor extends FragmentActivity {
 	public void reconect(View v) {
 
 		if (!bluetoothPadrao.isEnabled()) {
-			Toast.makeText(getApplicationContext(), "Ative o bluetooth", Toast.LENGTH_LONG).show();
+			showToast(getResources().getString(R.string.ativeBluetooth));
 		} else {
-			btnConectar.setText("Conectando...");
+			btnConectar.setText(getResources().getString(R.string.conectando));
 			btnConectar.setEnabled(false);
 			try {
 				interromperBluetooth();
-				Thread.sleep(1000);
+//				Thread.sleep(1000);
 				connectWithBluetooth(RESULT_OK);
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -201,7 +202,7 @@ public class Extras_seguidor extends FragmentActivity {
 
 	}
 	public void cronometroParar(){
-		if(isClickPause == false){ //entra para false;
+		if(!isClickPause){ //entra para false;
 			   tempoQuandoParado = m_chronometer.getBase() - SystemClock.elapsedRealtime();
 			  }
 			  m_chronometer.stop();
@@ -211,7 +212,7 @@ public class Extras_seguidor extends FragmentActivity {
 	
 	public void cronometroIniciar(){
 		  m_chronometer.stop();
-		  m_chronometer.setText(" (00:00)");
+		  m_chronometer.setText(getResources().getString(R.string.timer));
 		  tempoQuandoParado = 0;
 		
 		if(isClickPause){ 
@@ -228,8 +229,9 @@ public class Extras_seguidor extends FragmentActivity {
 	}
 
 	public void iniciar(View v) {
-		String mensagem = "i:" + txtMaxInverse.getText().toString() + "&p:" + txtProporcinalValue.getText().toString()
-				+ "&v:" + txtMax.getText().toString() + "&t:" + txtTempo.getText().toString() + "&l:"
+		String mensagem = "i:" + txtMaxInverse.getText().toString() + "&s:" + txtVTS.getText().toString()
+				+ "&p:" + txtProporcinalValue.getText().toString()
+                + "&v:" + txtMax.getText().toString() + "&t:" + txtTempo.getText().toString() + "&l:"
 				+ txtLinhaReta.getText().toString() + "&1:" + txtWeight1.getText().toString() + "&2:"
 				+ txtWeight2.getText().toString() + "&3:" + txtWeight3.getText().toString() + "&4:"
 				+ txtWeight4.getText().toString() + "&g:g;";
@@ -245,7 +247,7 @@ public class Extras_seguidor extends FragmentActivity {
 	}
 	
 	public void iniciar2(View v) {
-		String mensagem = "i:" + txtMaxInverse2.getText().toString() + "&p:" + txtProporcinalValue2.getText().toString()
+		String mensagem = "i:" + txtMaxInverse2.getText().toString() + "&s:" + txtVTS.getText().toString()+ "&p:" + txtProporcinalValue2.getText().toString()
 				+ "&v:" + txtMax2.getText().toString() + "&t:" + txtTempo2.getText().toString() + "&l:"
 				+ txtLinhaReta2.getText().toString() + "&1:" + txtWeight12.getText().toString() + "&2:"
 				+ txtWeight22.getText().toString() + "&3:" + txtWeight32.getText().toString() + "&4:"
@@ -262,7 +264,7 @@ public class Extras_seguidor extends FragmentActivity {
 	}
 	
 	public void iniciar3(View v) {
-		String mensagem = "i:" + txtMaxInverse3.getText().toString() + "&p:" + txtProporcinalValue3.getText().toString()
+		String mensagem = "i:" + txtMaxInverse3.getText().toString() + "&s:" + txtVTS.getText().toString()+ "&p:" + txtProporcinalValue3.getText().toString()
 				+ "&v:" + txtMax3.getText().toString() + "&t:" + txtTempo3.getText().toString() + "&l:"
 				+ txtLinhaReta3.getText().toString() + "&1:" + txtWeight13.getText().toString() + "&2:"
 				+ txtWeight23.getText().toString() + "&3:" + txtWeight33.getText().toString() + "&4:"
@@ -277,15 +279,6 @@ public class Extras_seguidor extends FragmentActivity {
 		}
 
 	}
-
-	// public void parar(View v) {
-	// if (btt != null) {
-	// Message msg = Message.obtain();
-	// msg.obj = "s";
-	// writeHandler.sendMessage(msg);
-	// }
-	//
-	// }
 
 	public void acaoDosBotoes() {
 		btnFrente.setOnTouchListener(new BotaoListener(frente,false));
@@ -306,7 +299,7 @@ public class Extras_seguidor extends FragmentActivity {
 		private String mensagem;
 		private boolean parar = false;
 
-		public BotaoListener(String mensagem,boolean parar) {
+		BotaoListener(String mensagem, boolean parar) {
 			super();
 			this.mensagem = mensagem;
 			this.parar = parar;
@@ -330,9 +323,10 @@ public class Extras_seguidor extends FragmentActivity {
 					msg.obj = conteudoAVoltar;
 					writeHandler.sendMessage(msg);
 				}
-			} else {
-				// Bluetooth nao conectado
 			}
+//            else {
+//				// Bluetooth nao conectado
+//			}
 			return false;
 		}
 
@@ -348,20 +342,18 @@ public class Extras_seguidor extends FragmentActivity {
 		case REQUEST_ENABLE_BT:
 
 			if (resultCode == Activity.RESULT_OK) {
-				Toast.makeText(getApplicationContext(), "Bluetooth Ativado XD", Toast.LENGTH_LONG).show();
+                showTextWithColorGreen(getResources().getString(R.string.bluetooth_ativado));
 				listaDeDispositivos();
 			} else {
-				Toast.makeText(getApplicationContext(), "Voçe precisa ativar o bluetooth ", Toast.LENGTH_LONG).show();
-
+                showTextWithColorRed(getResources().getString(R.string.precisa_ativar_bluetooth));
 			}
 			break;
 		case SELECT_PAIRED_DEVICE:
 			connectWithBluetooth(resultCode);
-
 			break;
 		case VALORES:
 			if (resultCode == RESULT_OK) {
-				Toast.makeText(getApplicationContext(), "Mudanças salvas", Toast.LENGTH_LONG).show();
+				showTextWithColorGreen(getResources().getString(R.string.mudanca_salvas));
 				frente = data.getStringExtra("frente");
 				direita = data.getStringExtra("direita");
 				esquerda = data.getStringExtra("esquerda");
@@ -375,19 +367,17 @@ public class Extras_seguidor extends FragmentActivity {
 				conteudoAVoltar = data.getStringExtra("conteudoAVoltar");
 				salvarValores();
 			} else {
-				Toast.makeText(getApplicationContext(), "Mudanças nao salvas", Toast.LENGTH_LONG).show();
+				showTextWithColorRed(getResources().getString(R.string.mudancas_nao_Salvas));
 			}
 
 			break;
 		}
-	};
+	}
 
-	private void connectWithBluetooth(int resultCode) {
+    private void connectWithBluetooth(int resultCode) {
 		SharedPreferences configDevice = getSharedPreferences(PREFS_NAME_BlUETOOTH, MODE_PRIVATE);
 		if (resultCode == RESULT_OK) {
-			//btnConectar = (Button) findViewById(R.id.btnConectar);
 			if (btt == null) {
-
 				btt = new BluetoothThread(configDevice.getString("btDevAddress", ""), new Handler() {
 
 					@Override
@@ -398,79 +388,74 @@ public class Extras_seguidor extends FragmentActivity {
 						String textoB[] = s.split(";");
 
 						// Do something with the message
-						if (s.equals("CONNECTED")) {
-							btnConectar.setText("Desconectar");
-							btnConectar.setEnabled(true);
-							Toast.makeText(getApplicationContext(), "Conectado", Toast.LENGTH_LONG).show();
-							// ativado = true;
-						} else if (s.equals("DISCONNECTED")) {
+                        switch (s) {
+                            case "CONNECTED":
+                                btnConectar.setText(getResources().getString(R.string.desconectar));
+                                btnConectar.setEnabled(true);
+                                showTextWithColorGreen(getResources().getString(R.string.conectado));
+                                break;
+                            case "DISCONNECTED":
+                                showToast(getResources().getString(R.string.desconectado));
+                                interromperBluetooth();
+                                break;
+                            case "CONNECTION FAILED":
+                                showTextWithColorRed(getResources().getString(R.string.falhaNaConexao));
+                                interromperBluetooth();
+                                break;
+                            default:
 
-							Toast.makeText(getApplicationContext(), "Desconectado", Toast.LENGTH_LONG).show();
-							btnConectar.setText("Conectar");
-							interromperBluetooth();
-							//btt = null;
-							btnConectar.setEnabled(true);
-						} else if (s.equals("CONNECTION FAILED")) {
-							Toast.makeText(getApplicationContext(), "Falha na conexao", Toast.LENGTH_LONG).show();
-							btnConectar.setText("Conectar");
-							interromperBluetooth();
-							//btt = null;
-							btnConectar.setEnabled(true);
-						} else {
+                                loop:
+                                for (int i = 0; i < textoB.length; i++) {
+                                    switch (i) {
+                                        case 0:
+                                            txtArduino01.setText(textoB[0]);
+                                            break;
+                                        case 1:
+                                            txtArduino02.setText(textoB[1]);
+                                            break;
+                                        case 2:
+                                            txtArduino03.setText(textoB[2]);
+                                            break;
+                                        case 3:
+                                            txtArduino04.setText(textoB[3]);
+                                            break;
+                                        case 4:
+                                            txtArduino05.setText(textoB[4]);
+                                            break;
+                                        case 5:
+                                            txtArduino06.setText(textoB[5]);
+                                            break;
+                                        case 6:
+                                            txtArduino07.setText(textoB[6]);
+                                            break;
+                                        default:
+                                            if (imprimir) {
+                                                showTextWithColorRed(getResources().getString(R.string.numerosMaximosDeLinhasUltrapassado));
+                                                imprimir = false;
+                                            }
 
-							loop: for (int i = 0; i < textoB.length; i++) {
-								switch (i) {
-								case 0:
-									txtArduino01.setText(textoB[0]);
-									break;
-								case 1:
-									txtArduino02.setText(textoB[1]);
-									break;
-								case 2:
-									txtArduino03.setText(textoB[2]);
-									break;
-								case 3:
-									txtArduino04.setText(textoB[3]);
-									break;
-								case 4:
-									txtArduino05.setText(textoB[4]);
-									break;
-								case 5:
-									txtArduino06.setText(textoB[5]);
-									break;
-								case 6:
-									txtArduino07.setText(textoB[6]);
-									break;
-								default:
-									if (imprimir) {
-										Toast.makeText(getApplicationContext(),
-												"Numeros maximos de linhas ultrapassado!!!!!!!", Toast.LENGTH_LONG)
-												.show();
-										imprimir = false;
-									}
-
-									break loop;
-								}
-							}
-						}
+                                            break loop;
+                                    }
+                                }
+                                break;
+                        }
 					}
 				});
 			}
-
-			if (btt != null) {
+			if(btt != null){
 				// Get the handler that is used to send messages
 				writeHandler = btt.getWriteHandler();
 
 				// Run the thread
 				btt.start();
 
-				btnConectar.setText("Conectando...");
+				btnConectar.setText(getResources().getString(R.string.conectando));
 				btnConectar.setEnabled(false);
 			}
 			// break;
 
 		} else {
-			Toast.makeText(getApplicationContext(), "Nenhum dispositivo Selecionado", Toast.LENGTH_LONG).show();
+            showToast(getResources().getString(R.string.nenhumDispositivoSelecionado));
 		}
 
 	}
@@ -483,7 +468,7 @@ public class Extras_seguidor extends FragmentActivity {
 
 		getMenuInflater().inflate(R.menu.mn_extras_seguidor, menu);
 		btiMostrarDados = menu.findItem(R.id.actMostrarOcultar);
-		btiMostrarDados.setTitle("Mostrar");
+		btiMostrarDados.setTitle(getResources().getString(R.string.mostrar));
 		return true;
 	}
 
@@ -494,8 +479,7 @@ public class Extras_seguidor extends FragmentActivity {
 
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			Toast.makeText(this, "Sair", Toast.LENGTH_SHORT).show();
-
+			showToast(getResources().getString(R.string.sair));
 			interromperBluetooth();
 			//this.finishAndRemoveTask();
 			finish();
@@ -543,8 +527,8 @@ public class Extras_seguidor extends FragmentActivity {
 				txtArduino05.setVisibility(View.VISIBLE);
 				txtArduino06.setVisibility(View.VISIBLE);
 				txtArduino07.setVisibility(View.VISIBLE);
-				Toast.makeText(getApplicationContext(), "Dados visiveis", Toast.LENGTH_LONG).show();
-				btiMostrarDados.setTitle("Ocultar");
+                showToast(getResources().getString(R.string.dadosVisiveis));
+                btiMostrarDados.setTitle(getResources().getString(R.string.ocultar));
 				mostrarDados = false;
 
 			} else {
@@ -556,8 +540,8 @@ public class Extras_seguidor extends FragmentActivity {
 				txtArduino05.setVisibility(View.INVISIBLE);
 				txtArduino06.setVisibility(View.INVISIBLE);
 				txtArduino07.setVisibility(View.INVISIBLE);
-				Toast.makeText(getApplicationContext(), "Dados invisiveis", Toast.LENGTH_LONG).show();
-				btiMostrarDados.setTitle("Mostrar");
+				showToast(getResources().getString(R.string.dadosInvisivel));
+				btiMostrarDados.setTitle(getResources().getString(R.string.mostrar));
 				mostrarDados = true;
 			}
 			break;
@@ -569,16 +553,13 @@ public class Extras_seguidor extends FragmentActivity {
 		}
 
 		return true;
-	};
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
+
+    @Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
+    }
 
 	public void resgatarValoresBotoes() {
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -603,6 +584,7 @@ public class Extras_seguidor extends FragmentActivity {
 		txtTempo.setText(settings.getString("tempo", "0"));
 		txtLinhaReta.setText(settings.getString("reta", "200"));
 		///////
+        txtVTS.setText(settings.getString("vts","200"));
 		txtWeight12.setText(settings.getString("weight12", "1"));
 		txtWeight22.setText(settings.getString("weight22", "2"));
 		txtWeight32.setText(settings.getString("weight32", "6"));
@@ -648,6 +630,7 @@ public class Extras_seguidor extends FragmentActivity {
 		editor.putString("weight4", txtWeight4.getText().toString());
 		editor.putString("reta", txtLinhaReta.getText().toString());
 		///////
+        editor.putString("vts", txtVTS.getText().toString());
 		editor.putString("maxInverse2", txtMaxInverse2.getText().toString());
 		editor.putString("proporcinalValue2", txtProporcinalValue2.getText().toString());
 		editor.putString("max2", txtMax2.getText().toString());
@@ -672,25 +655,24 @@ public class Extras_seguidor extends FragmentActivity {
 		
 
 		// Confirma a gravação dos dados
-		editor.commit();
+		editor.apply();
 
 		SharedPreferences configInicializador = getSharedPreferences(PREFS_NAME_CLOSE, MODE_PRIVATE);
 		SharedPreferences.Editor editorInicializador = configInicializador.edit();
 
 		editorInicializador.putInt("inicializar", 3);
-		editorInicializador.commit();
+		editorInicializador.apply();
 	}
 	
 	@Override
     public void onBackPressed() {
     	interromperBluetooth();
     	finish();
-    };
+    }
 
-	@Override
+    @Override
 	protected void onPause() {
 		super.onPause();
-
 		salvarValores();
 	}
 
@@ -698,7 +680,7 @@ public class Extras_seguidor extends FragmentActivity {
 	public void onResume() {
 		super.onResume();
 		acaoDosBotoes();
-		// resgatarValoresBotoes();
+		resgatarValoresBotoes();
 	}
 
 	@Override
@@ -712,5 +694,40 @@ public class Extras_seguidor extends FragmentActivity {
 		super.onDestroy();
 		interromperBluetooth();
 	}
+
+    public void showToast(final String mensagem){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(),mensagem,Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //Usado para mostras as mensagens em vermelho.
+    public void showTextWithColorRed(final String mensagem){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast toast = Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT);
+                TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                v.setTextColor(Color.RED);
+                toast.show();
+            }
+        });
+
+    }
+    //Usado para mostras as mensagens em verde.
+    public void showTextWithColorGreen(final String mensagem){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast toast = Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT);
+                TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                v.setTextColor(Color.GREEN);
+                toast.show();
+            }
+        });
+    }
 
 }

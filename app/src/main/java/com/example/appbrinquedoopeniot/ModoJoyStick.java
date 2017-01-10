@@ -1,5 +1,6 @@
 package com.example.appbrinquedoopeniot;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -35,7 +36,6 @@ public class ModoJoyStick extends FragmentActivity {
 			dadosUpLeft_Medium, dadosUpLeft_High, conteudoAVoltar;
 	ImageView image_joystick, image_border;
 	TextView textView1, textView2, textView3, textView4, textView5, lblNivel;
-	String nivelBaixo = "Baixo", nivelMedio = "Medio", nivelAlto = "Alto";
 
 	String x, y, z, a, b, c;
 	Button btn1, btn2, btn3, btn4, btn5, btn6;
@@ -104,7 +104,7 @@ public class ModoJoyStick extends FragmentActivity {
 		// textView1 = (TextView) findViewById(R.id.lblPosicaoX);
 		// textView2 = (TextView) findViewById(R.id.lblPosicaoY);
 		// textView3 = (TextView) findViewById(R.id.lblAngulo);
-		textView4 = (TextView) findViewById(R.id.lblDistancia);
+		//textView4 = (TextView) findViewById(R.id.lblDistancia);
 		textView5 = (TextView) findViewById(R.id.lblDirecao);
 		lblNivel = (TextView) findViewById(R.id.lblNivel);
 
@@ -126,7 +126,7 @@ public class ModoJoyStick extends FragmentActivity {
 					// textView2.setText("Y : " + String.valueOf(js.getY()));
 					// textView3.setText("Angulo : " +
 					// String.valueOf(js.getAngle()));
-					textView4.setText("Distancia : " + String.valueOf(js.getDistance()));
+					//textView4.setText("Distancia : " + String.valueOf(js.getDistance()));
 					int direction;
 					if (direcoes8) {
 						direction = js.get8Direction();
@@ -136,129 +136,129 @@ public class ModoJoyStick extends FragmentActivity {
 
 					switch (direction) {
 					case JoyStickClass.STICK_UP_LOW:
-						textView5.setText("Direção : Up");
-						lblNivel.setText("Nivel : " + nivelBaixo);
+						textView5.setText(getResources().getString(R.string.direcao) +" Up");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.baixo));
 						BotaoListener(dadosUp_Low);
 						break;
 					case JoyStickClass.STICK_UP_MEDIUM:
-						textView5.setText("Direção : Up");
-						lblNivel.setText("Nivel : " + nivelMedio);
+						textView5.setText(getResources().getString(R.string.direcao) + "Up");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.medio));
 						BotaoListener(dadosUp_Medium);
 						break;
 					case JoyStickClass.STICK_UP_HIGH:
-						textView5.setText("Direção : Up");
-						lblNivel.setText("Nivel : " + nivelAlto);
+						textView5.setText(getResources().getString(R.string.direcao) + "Up");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.alto));
 						BotaoListener(dadosUp_High);
 						break;
 					case JoyStickClass.STICK_UPRIGHT_LOW:
-						textView5.setText("Direção : Up Right");
-						lblNivel.setText("Nivel : " + nivelBaixo);
+						textView5.setText(getResources().getString(R.string.direcao) + "Up Right");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.baixo));
 						BotaoListener(dadosUpRight_Low);
 						break;
 					case JoyStickClass.STICK_UPRIGHT_MEDIUM:
-						textView5.setText("Direção : Up Right");
-						lblNivel.setText("Nivel : " + nivelMedio);
+						textView5.setText(getResources().getString(R.string.direcao) + "Up Right");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.medio));
 						BotaoListener(dadosUpRight_Medium);
 						break;
 					case JoyStickClass.STICK_UPRIGHT_HIGH:
-						textView5.setText("Direção : Up Right");
-						lblNivel.setText("Nivel : " + nivelAlto);
+						textView5.setText(getResources().getString(R.string.direcao) + "Up Right");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.alto));
 						BotaoListener(dadosUpRight_High);
 						break;
 					case JoyStickClass.STICK_RIGHT_LOW:
-						textView5.setText("Direção : Right");
-						lblNivel.setText("Nivel : " + nivelBaixo);
+						textView5.setText(getResources().getString(R.string.direcao) + "Right");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.baixo));
 						BotaoListener(dadosRight_Low);
 						break;
 					case JoyStickClass.STICK_RIGHT_MEDIUM:
-						textView5.setText("Direção : Right");
-						lblNivel.setText("Nivel : " + nivelMedio);
+						textView5.setText(getResources().getString(R.string.direcao) + "Right");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.medio));
 						BotaoListener(dadosRight_Medium);
 						break;
 					case JoyStickClass.STICK_RIGHT_HIGH:
-						textView5.setText("Direção : Right");
-						lblNivel.setText("Nivel : " + nivelAlto);
+						textView5.setText(getResources().getString(R.string.direcao) + "Right");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.alto));
 						BotaoListener(dadosRight_High);
 						break;
 					case JoyStickClass.STICK_DOWNRIGHT_LOW:
-						textView5.setText("Direção : Down Right");
-						lblNivel.setText("Nivel : " + nivelBaixo);
+						textView5.setText(getResources().getString(R.string.direcao) + "Down Right");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.baixo));
 						BotaoListener(dadosDownRight_Low);
 						break;
 					case JoyStickClass.STICK_DOWNRIGHT_MEDIUM:
-						textView5.setText("Direção : Down Right");
-						lblNivel.setText("Nivel : " + nivelMedio);
+						textView5.setText(getResources().getString(R.string.direcao) + "Down Right");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.medio));
 						BotaoListener(dadosDownRight_Medium);
 						break;
 					case JoyStickClass.STICK_DOWNRIGHT_HIGH:
-						textView5.setText("Direção : Down Right");
-						lblNivel.setText("Nivel : " + nivelAlto);
+						textView5.setText(getResources().getString(R.string.direcao) + "Down Right");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.alto));
 						BotaoListener(dadosDownRight_High);
 						break;
 					case JoyStickClass.STICK_DOWN_LOW:
-						textView5.setText("Direção : Down");
-						lblNivel.setText("Nivel : " + nivelBaixo);
+						textView5.setText(getResources().getString(R.string.direcao) + "Down");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.baixo));
 						BotaoListener(dadosDown_Low);
 						break;
 					case JoyStickClass.STICK_DOWN_MEDIUM:
-						textView5.setText("Direção : Down");
-						lblNivel.setText("Nivel : " + nivelMedio);
+						textView5.setText(getResources().getString(R.string.direcao) + "Down");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.medio));
 						BotaoListener(dadosDown_Medium);
 						break;
 					case JoyStickClass.STICK_DOWN_HIGH:
-						textView5.setText("Direção : Down");
-						lblNivel.setText("Nivel : " + nivelAlto);
+						textView5.setText(getResources().getString(R.string.direcao) + "Down");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.alto));
 						BotaoListener(dadosDown_High);
 						break;
 					case JoyStickClass.STICK_DOWNLEFT_LOW:
-						textView5.setText("Direção : Down Left");
-						lblNivel.setText("Nivel : " + nivelBaixo);
+						textView5.setText(getResources().getString(R.string.direcao) + "Down Left");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.baixo));
 						BotaoListener(dadosDownLeft_Low);
 						break;
 					case JoyStickClass.STICK_DOWNLEFT_MEDIUM:
-						textView5.setText("Direção : Down Left");
-						lblNivel.setText("Nivel : " + nivelMedio);
+						textView5.setText(getResources().getString(R.string.direcao) + "Down Left");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.medio));
 						BotaoListener(dadosDownLeft_Medium);
 						break;
 					case JoyStickClass.STICK_DOWNLEFT_HIGH:
-						textView5.setText("Direção : Down Left");
-						lblNivel.setText("Nivel : " + nivelAlto);
+						textView5.setText(getResources().getString(R.string.direcao) + "Down Left");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.alto));
 						BotaoListener(dadosDownLeft_High);
 						break;
 					case JoyStickClass.STICK_LEFT_LOW:
-						textView5.setText("Direção : Left");
-						lblNivel.setText("Nivel : " + nivelBaixo);
+						textView5.setText(getResources().getString(R.string.direcao) + "Left");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.baixo));
 						BotaoListener(dadosLeft_Low);
 						break;
 					case JoyStickClass.STICK_LEFT_MEDIUM:
-						textView5.setText("Direção : Left");
-						lblNivel.setText("Nivel : " + nivelMedio);
+						textView5.setText(getResources().getString(R.string.direcao) + "Left");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.medio));
 						BotaoListener(dadosLeft_Medium);
 						break;
 					case JoyStickClass.STICK_LEFT_HIGH:
-						textView5.setText("Direção : Left");
-						lblNivel.setText("Nivel : " + nivelAlto);
+						textView5.setText(getResources().getString(R.string.direcao) + "Left");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.alto));
 						BotaoListener(dadosLeft_High);
 						break;
 					case JoyStickClass.STICK_UPLEFT_LOW:
-						textView5.setText("Direção : Up Left");
-						lblNivel.setText("Nivel : " + nivelBaixo);
+						textView5.setText(getResources().getString(R.string.direcao) + "Up Left");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.baixo));
 						BotaoListener(dadosUpLeft_Low);
 						break;
 					case JoyStickClass.STICK_UPLEFT_MEDIUM:
-						textView5.setText("Direção : Up Left");
-						lblNivel.setText("Nivel : " + nivelMedio);
+						textView5.setText(getResources().getString(R.string.direcao) + "Up Left");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.medio));
 						BotaoListener(dadosUpLeft_Medium);
 						break;
 					case JoyStickClass.STICK_UPLEFT_HIGH:
-						textView5.setText("Direção : Up Left");
-						lblNivel.setText("Nivel : " + nivelAlto);
+						textView5.setText(getResources().getString(R.string.direcao) + "Up Left");
+						lblNivel.setText(getResources().getString(R.string.nivel) + getResources().getString(R.string.alto));
 						BotaoListener(dadosUpLeft_High);
 						break;
 
 					case JoyStickClass.STICK_NONE:
-						textView5.setText("Direção : Center");
-						lblNivel.setText("Nivel : " + "Parado");
+						textView5.setText(getResources().getString(R.string.direcao) + "Center");
+						lblNivel.setText(getResources().getString(R.string.nivel) + "Parado");
 						BotaoListener(conteudoAVoltar);
 						break;
 					}
@@ -266,9 +266,9 @@ public class ModoJoyStick extends FragmentActivity {
 					// textView1.setText("X :");
 					// textView2.setText("Y :");
 					// textView3.setText("Angulo :");
-					textView4.setText("Distancia :");
-					textView5.setText("Direção :");
-					lblNivel.setText("Nivel : ");
+					//textView4.setText("Distancia :");
+                    textView5.setText(getResources().getString(R.string.direcao));
+                    lblNivel.setText(getResources().getString(R.string.nivel));
 					BotaoListener(conteudoAVoltar);
 				}
 				return true;
@@ -300,7 +300,7 @@ public class ModoJoyStick extends FragmentActivity {
 
 	public void interromperBluetooth() {
 		if (btt != null) {
-			btnConectar.setText("Conectar");
+            btnConectar.setText(getResources().getString(R.string.conectar));
 			btnConectar.setEnabled(true);
 			btt.interrupt();
 			btt.disconnect();
@@ -312,8 +312,7 @@ public class ModoJoyStick extends FragmentActivity {
 	public void connectButtonPressed(View v) {
 
 		if (bluetoothPadrao == null) {
-			Toast.makeText(getApplicationContext(), "Dispostivo nao possui Bluetooth", Toast.LENGTH_LONG).show();
-
+            showTextWithColorRed(getResources().getString(R.string.dispostivoNaoPossuiBluetooth));
 		} else {
 			if (!bluetoothPadrao.isEnabled()) {
 
@@ -337,13 +336,12 @@ public class ModoJoyStick extends FragmentActivity {
 		// Retrono do pedido de ativação do Bluetooth
 		case REQUEST_ENABLE_BT:
 
-			if (resultCode == Activity.RESULT_OK) {
-				Toast.makeText(getApplicationContext(), "Bluetooth Ativado XD", Toast.LENGTH_LONG).show();
-				listaDeDispositivos();
-			} else {
-				Toast.makeText(getApplicationContext(), "Voçe precisa ativar o bluetooth ", Toast.LENGTH_LONG).show();
-
-			}
+            if (resultCode == Activity.RESULT_OK) {
+                showTextWithColorGreen(getResources().getString(R.string.bluetooth_ativado));
+                listaDeDispositivos();
+            } else {
+                showTextWithColorRed(getResources().getString(R.string.precisa_ativar_bluetooth));
+            }
 			break;
 		case SELECT_PAIRED_DEVICE:
 			connectWithBluetooth(resultCode);
@@ -351,17 +349,102 @@ public class ModoJoyStick extends FragmentActivity {
 
 		case VALORES:
 			if (resultCode == RESULT_OK) {
-				Toast.makeText(getApplicationContext(), "Mudanças salvas", Toast.LENGTH_LONG).show();
+                showTextWithColorGreen(getResources().getString(R.string.mudanca_salvas));
 				resgatarValoresBotoes();
 
 			} else {
-				Toast.makeText(getApplicationContext(), "Mudanças nao salvas", Toast.LENGTH_LONG).show();
+                showTextWithColorRed(getResources().getString(R.string.mudancas_nao_Salvas));
 			}
 
 			break;
 
 		}
-	};
+	}
+
+    private void connectWithBluetooth(int resultCode) {
+        SharedPreferences configDevice = getSharedPreferences(PREFS_NAME_BlUETOOTH, MODE_PRIVATE);
+        if (resultCode == RESULT_OK) {
+            if (btt == null) {
+                btt = new BluetoothThread(configDevice.getString("btDevAddress", ""), new Handler() {
+
+                    @Override
+                    public void handleMessage(Message message) {
+
+                        String s = (String) message.obj;
+
+                        String textoB[] = s.split(";");
+
+                        // Do something with the message
+                        switch (s) {
+                            case "CONNECTED":
+                                btnConectar.setText(getResources().getString(R.string.desconectar));
+                                btnConectar.setEnabled(true);
+                                showTextWithColorGreen(getResources().getString(R.string.conectado));
+                                break;
+                            case "DISCONNECTED":
+                                showToast(getResources().getString(R.string.desconectado));
+                                interromperBluetooth();
+                                break;
+                            case "CONNECTION FAILED":
+                                showTextWithColorRed(getResources().getString(R.string.falhaNaConexao));
+                                interromperBluetooth();
+                                break;
+                            default:
+
+                                loop:
+                                for (int i = 0; i < textoB.length; i++) {
+                                    switch (i) {
+                                        case 0:
+                                            txtArduino01.setText(textoB[0]);
+                                            break;
+                                        case 1:
+                                            txtArduino02.setText(textoB[1]);
+                                            break;
+                                        case 2:
+                                            txtArduino03.setText(textoB[2]);
+                                            break;
+                                        case 3:
+                                            txtArduino04.setText(textoB[3]);
+                                            break;
+                                        case 4:
+                                            txtArduino05.setText(textoB[4]);
+                                            break;
+                                        case 5:
+                                            txtArduino06.setText(textoB[5]);
+                                            break;
+                                        case 6:
+                                            txtArduino07.setText(textoB[6]);
+                                            break;
+                                        default:
+                                            if (imprimir) {
+                                                showTextWithColorRed(getResources().getString(R.string.numerosMaximosDeLinhasUltrapassado));
+                                                imprimir = false;
+                                            }
+
+                                            break loop;
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                });
+            }
+            if(btt != null){
+                // Get the handler that is used to send messages
+                writeHandler = btt.getWriteHandler();
+
+                // Run the thread
+                btt.start();
+
+                btnConectar.setText(getResources().getString(R.string.conectando));
+                btnConectar.setEnabled(false);
+            }
+            // break;
+
+        } else {
+            showToast(getResources().getString(R.string.nenhumDispositivoSelecionado));
+        }
+    }
 
 	public void reconect(View v) {
 		if (!bluetoothPadrao.isEnabled()) {
@@ -381,99 +464,7 @@ public class ModoJoyStick extends FragmentActivity {
 	}
 
 	@SuppressLint("HandlerLeak")
-	private void connectWithBluetooth(int resultCode) {
-		SharedPreferences configDevice = getSharedPreferences(PREFS_NAME_BlUETOOTH, MODE_PRIVATE);
-		if (resultCode == RESULT_OK) {
-			btnConectar = (Button) findViewById(R.id.btnConectar);
-			if (btt == null) {
 
-				btt = new BluetoothThread(configDevice.getString("btDevAddress", ""), new Handler() {
-
-					@Override
-					public void handleMessage(Message message) {
-
-						String s = (String) message.obj;
-
-						String textoB[] = s.split(";");
-
-						// Do something with the message
-						if (s.equals("CONNECTED")) {
-							btnConectar.setText("Desconectar");
-							btnConectar.setEnabled(true);
-							Toast.makeText(getApplicationContext(), "Conectado", Toast.LENGTH_LONG).show();
-
-							// ativado = true;
-						} else if (s.equals("DISCONNECTED")) {
-
-							Toast.makeText(getApplicationContext(), "Desconectado", Toast.LENGTH_LONG).show();
-							btnConectar.setText("Conectar");
-							interromperBluetooth();
-							//btt = null;
-							btnConectar.setEnabled(true);
-						} else if (s.equals("CONNECTION FAILED")) {
-							Toast.makeText(getApplicationContext(), "Falha na conexao", Toast.LENGTH_LONG).show();
-							btnConectar.setText("Conectar");
-							interromperBluetooth();
-							//btt = null;
-							btnConectar.setEnabled(true);
-						} else {
-
-							loop: for (int i = 0; i < textoB.length; i++) {
-								switch (i) {
-								case 0:
-									txtArduino01.setText(textoB[0]);
-									break;
-								case 1:
-									txtArduino02.setText(textoB[1]);
-									break;
-								case 2:
-									txtArduino03.setText(textoB[2]);
-									break;
-								case 3:
-									txtArduino04.setText(textoB[3]);
-									break;
-								case 4:
-									txtArduino05.setText(textoB[4]);
-									break;
-								case 5:
-									txtArduino06.setText(textoB[5]);
-									break;
-								case 6:
-									txtArduino07.setText(textoB[6]);
-									break;
-								default:
-									if (imprimir) {
-										Toast.makeText(getApplicationContext(),
-												"Numeros maximos de linhas ultrapassado!!!!!!!", Toast.LENGTH_LONG)
-												.show();
-										imprimir = false;
-									}
-
-									break loop;
-								}
-							}
-						}
-					}
-				});
-			}
-
-			if (btt != null) {
-				// Get the handler that is used to send messages
-				writeHandler = btt.getWriteHandler();
-
-				// Run the thread
-				btt.start();
-
-				btnConectar.setText("Conectando...");
-				btnConectar.setEnabled(false);
-			}
-			// break;
-
-		} else {
-			Toast.makeText(getApplicationContext(), "Nenhum dispositivo Selecionado", Toast.LENGTH_LONG).show();
-		}
-
-	}
 
 	public void acaoDosBotoes() {
 		btn1.setOnTouchListener(new BotaoListener(x));
@@ -516,6 +507,8 @@ public class ModoJoyStick extends FragmentActivity {
 	}
 
 	public void resgatarValoresBotoes() {
+        configValores = getSharedPreferences(PREFS_NAME_VALORES_JOY, MODE_PRIVATE);
+        editorValores = configValores.edit();
 		dadosUp_Low = configValores.getString("cima1", "w1");
 		dadosUp_Medium = configValores.getString("cima2", "w2");
 		dadosUp_High = configValores.getString("cima3", "w3");
@@ -619,11 +612,9 @@ public class ModoJoyStick extends FragmentActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		configValores = getSharedPreferences(PREFS_NAME_VALORES_JOY, MODE_PRIVATE);
-		editorValores = configValores.edit();
+        acaoDoJoystick();
+        acaoDosBotoes();
 		resgatarValoresBotoes();
-		acaoDoJoystick();
-		acaoDosBotoes();
 		setVeloDire8Check();
 
 	}
@@ -658,7 +649,7 @@ public class ModoJoyStick extends FragmentActivity {
 		getMenuInflater().inflate(R.menu.mn_modo_joystick, menu);
 
 		btiMostrarDados = menu.findItem(R.id.actMostrarOcultar);
-		btiMostrarDados.setTitle("Mostrar");
+        btiMostrarDados.setTitle(getResources().getString(R.string.mostrar));
 		ckbDirecao8 = menu.findItem(R.id.ckbDirecoes8);
 		ckbVelocidade = menu.findItem(R.id.ckbVelocidade);
 
@@ -708,8 +699,7 @@ public class ModoJoyStick extends FragmentActivity {
 			break;
 		
 		case android.R.id.home:
-			Toast.makeText(this, "Sair", Toast.LENGTH_SHORT).show();
-
+            showToast(getResources().getString(R.string.sair));
 			interromperBluetooth();
 			//this.finishAndRemoveTask();
 			finish();
@@ -740,8 +730,8 @@ public class ModoJoyStick extends FragmentActivity {
 				txtArduino05.setVisibility(View.VISIBLE);
 				txtArduino06.setVisibility(View.VISIBLE);
 				txtArduino07.setVisibility(View.VISIBLE);
-				Toast.makeText(getApplicationContext(), "Dados visiveis", Toast.LENGTH_LONG).show();
-				btiMostrarDados.setTitle("Ocultar");
+                showToast(getResources().getString(R.string.dadosVisiveis));
+                btiMostrarDados.setTitle(getResources().getString(R.string.ocultar));
 				mostrarDados = false;
 			} else {
 
@@ -753,8 +743,8 @@ public class ModoJoyStick extends FragmentActivity {
 				txtArduino05.setVisibility(View.INVISIBLE);
 				txtArduino06.setVisibility(View.INVISIBLE);
 				txtArduino07.setVisibility(View.INVISIBLE);
-				Toast.makeText(getApplicationContext(), "Dados invisiveis", Toast.LENGTH_LONG).show();
-				btiMostrarDados.setTitle("Mostrar");
+                showToast(getResources().getString(R.string.dadosInvisivel));
+                btiMostrarDados.setTitle(getResources().getString(R.string.mostrar));
 				mostrarDados = true;
 			}
 
@@ -769,6 +759,41 @@ public class ModoJoyStick extends FragmentActivity {
 		}
 
 		return true;
-	};
+	}
+
+    public void showToast(final String mensagem){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(),mensagem,Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //Usado para mostras as mensagens em vermelho.
+    public void showTextWithColorRed(final String mensagem){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast toast = Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT);
+                TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                v.setTextColor(Color.RED);
+                toast.show();
+            }
+        });
+
+    }
+    //Usado para mostras as mensagens em verde.
+    public void showTextWithColorGreen(final String mensagem){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast toast = Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT);
+                TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                v.setTextColor(Color.GREEN);
+                toast.show();
+            }
+        });
+    }
 
 }

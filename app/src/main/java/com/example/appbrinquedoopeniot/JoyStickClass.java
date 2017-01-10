@@ -37,7 +37,7 @@ public class JoyStickClass extends Activity {
 	private Bitmap stick;
 
 	private boolean touch_state = false;
-	
+
 	public static final String PREFS_NAME_VELOCIDADE = "velocidade";
 
 	public JoyStickClass(Context context, ViewGroup layout, int stick_res_id) {
@@ -130,9 +130,9 @@ public class JoyStickClass extends Activity {
 	public int getMinimumDistance() {
 		return min_distance;
 	}
-	
 
-	private int getVelocidade() {		
+
+	private int getVelocidade() {
 		int distancia = 3;
 		if (velocidade) {
 
@@ -188,10 +188,10 @@ public class JoyStickClass extends Activity {
 				direcao = 70;
 			}
 			direcao += getVelocidade();
-		} 
+		}
 		return direcao;
-		
-		
+
+
 	}
 
 	public void setOffset(int offset) {
