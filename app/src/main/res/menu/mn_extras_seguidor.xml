@@ -29,6 +29,21 @@
         </menu>
     </item>
     <item
+        android:id="@+id/actDadosSeguidor"
+        android:title="@string/dadosSeguidor">
+        <menu>
+            <item
+                android:id="@+id/actDadosSeguidorListar"
+                android:title="@string/listarDadosSeguidor" />
+            <item
+                android:id="@+id/actDadosSeguidorAdicionar"
+                android:title="@string/AdicionarDadosSeguidor" />
+            <item
+                android:id="@+id/actDadosSeguidorEditar"
+                android:title="@string/editarDadosSeguidor" />
+        </menu>
+    </item>
+    <item
         android:id="@+id/actSobreApp"
         android:title="@string/sobre_app_botao"
         app:showAsAction="never"/>

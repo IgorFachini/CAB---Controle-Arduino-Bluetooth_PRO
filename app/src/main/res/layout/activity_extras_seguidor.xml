@@ -43,13 +43,29 @@
                 android:layout_height="40dp"
                 android:background="@drawable/layout_botao_c" />
 
-            <Button
-                android:id="@+id/btnParar"
-                style="?android:attr/buttonStyleSmall"
+            <LinearLayout
                 android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Parar" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/Button02"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="iniciar"
+                    android:text="Iniciar" />
+
+                <Button
+                    android:id="@+id/btnParar"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Parar" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -92,7 +108,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/botoeBaixo" >
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <Button
             android:id="@+id/btnConectar"
@@ -161,10 +178,9 @@
             android:layout_marginRight="10dp"
             android:layout_toEndOf="@+id/botoes1"
             android:layout_toStartOf="@+id/valores"
-            android:background="@color/Black"
+            android:background="@color/Transparent"
             android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="invisible" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtArduino01"
@@ -284,13 +300,7 @@
                             android:inputType="numberDecimal" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/textView1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="==Valores 1=="
-                        android:textSize="20sp" />
+
 
                     <LinearLayout
                         android:layout_width="200dp"
@@ -463,427 +473,7 @@
                         android:orientation="horizontal" >
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
 
-                        <Button
-                            android:id="@+id/Button02"
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:onClick="iniciar"
-                            android:text="Iniciar" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/Yellow"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/TextView14"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="==Valores 2=="
-                        android:textSize="20sp" />
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:id="@+id/TextView12"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="L"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtLinhaReta3"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" >
-
-                            <requestFocus />
-                        </EditText>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:id="@+id/TextView08"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="MI"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtMaxInverse3"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-
-                        <TextView
-                            android:id="@+id/TextView17"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="W1"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtWeight13"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:id="@+id/TextView15"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="PV"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtProporcionalValue3"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-
-                        <TextView
-                            android:id="@+id/TextView19"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="W2"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtWeight23"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:id="@+id/TextView10"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="V"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtMax3"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-
-                        <TextView
-                            android:id="@+id/TextView18"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="W3"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtWeight33"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:id="@+id/TextView11"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="T"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtTempo3"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-
-                        <TextView
-                            android:id="@+id/TextView16"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="W4"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtWeight43"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-
-                        <Button
-                            android:id="@+id/Button01"
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:onClick="iniciar3"
-                            android:text="Iniciar" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/Green"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/TextView24"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="==Valores 3=="
-                        android:textSize="20sp" />
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:id="@+id/TextView23"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="L"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtLinhaReta2"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:id="@+id/TextView20"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="MI"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtMaxInverse2"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-
-                        <TextView
-                            android:id="@+id/TextView27"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="W1"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtWeight12"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:id="@+id/TextView25"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="PV"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtProporcionalValue2"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-
-                        <TextView
-                            android:id="@+id/TextView29"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="W2"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtWeight22"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:id="@+id/TextView21"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="V"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtMax2"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-
-                        <TextView
-                            android:id="@+id/TextView28"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="W3"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtWeight32"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:id="@+id/TextView22"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="T"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtTempo2"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-
-                        <TextView
-                            android:id="@+id/TextView26"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="W4"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <EditText
-                            android:id="@+id/txtWeight42"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="numberDecimal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-
-                        <Button
-                            android:id="@+id/Button04"
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:onClick="iniciar2"
-                            android:text="Iniciar" />
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
@@ -897,6 +487,16 @@
             android:layout_toStartOf="@+id/btnConectar"
             android:background="@drawable/ic_reconect"
             android:onClick="reconect" />
+
+        <TextView
+            android:id="@+id/txtNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Valores 1"
+            android:layout_toStartOf="@+id/btnReConectar"
+            android:textSize="20sp" />
     </RelativeLayout>
 
 </RelativeLayout>
