@@ -79,10 +79,10 @@
         android:layout_marginRight="10dp"
         android:layout_toEndOf="@+id/botoes1"
         android:layout_toStartOf="@+id/botoes2"
-        android:background="@color/Black"
+        android:background="@color/Transparent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="invisible" >
+        android:visibility="visible" >
 
         <TextView
             android:id="@+id/txtArduino01"

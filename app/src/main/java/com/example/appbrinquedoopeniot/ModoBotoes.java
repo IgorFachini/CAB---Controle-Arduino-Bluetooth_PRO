@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class ModoBotoes extends FragmentActivity {
 	public static final String PREFS_NAME_CLOSE = "inicializador";
 	
 	Intent Value_Bottons;
+	LinearLayout telaFundo;
 
 	BluetoothThread btt;
 	Handler writeHandler;
@@ -92,6 +94,7 @@ public class ModoBotoes extends FragmentActivity {
 	}
 
 	public void referenciarElementosTela() {
+		telaFundo = (LinearLayout)findViewById(R.id.FundoDados);
 		dados = findViewById(R.id.FundoDados);
 		txtArduino01 = (TextView) findViewById(R.id.txtArduino01);
 		txtArduino02 = (TextView) findViewById(R.id.txtArduino02);
@@ -188,6 +191,7 @@ public class ModoBotoes extends FragmentActivity {
 		btn4.setOnTouchListener(new BotaoListener(a));
 		btn5.setOnTouchListener(new BotaoListener(b));
 		btn6.setOnTouchListener(new BotaoListener(c));
+		telaFundo.setOnClickListener(new telaFundo());
 	}
 
 	public class BotaoListener implements OnTouchListener {
@@ -219,6 +223,41 @@ public class ModoBotoes extends FragmentActivity {
 			return false;
 		}
 
+	}
+
+	public class telaFundo implements View.OnClickListener {
+		@Override
+		public void onClick(View view) {
+			mostrarEsconderTelaFundo();
+		}
+	}
+	public void mostrarEsconderTelaFundo(){
+		if (mostrarDados) {
+			dados.setBackgroundColor(Color.BLACK);
+			txtArduino01.setVisibility(View.VISIBLE);
+			txtArduino02.setVisibility(View.VISIBLE);
+			txtArduino03.setVisibility(View.VISIBLE);
+			txtArduino04.setVisibility(View.VISIBLE);
+			txtArduino05.setVisibility(View.VISIBLE);
+			txtArduino06.setVisibility(View.VISIBLE);
+			txtArduino07.setVisibility(View.VISIBLE);
+			showToast(getResources().getString(R.string.dadosVisiveis));
+			btiMostrarDados.setTitle(getResources().getString(R.string.ocultar));
+			mostrarDados = false;
+
+		} else {
+			dados.setBackgroundColor(Color.TRANSPARENT);
+			txtArduino01.setVisibility(View.INVISIBLE);
+			txtArduino02.setVisibility(View.INVISIBLE);
+			txtArduino03.setVisibility(View.INVISIBLE);
+			txtArduino04.setVisibility(View.INVISIBLE);
+			txtArduino05.setVisibility(View.INVISIBLE);
+			txtArduino06.setVisibility(View.INVISIBLE);
+			txtArduino07.setVisibility(View.INVISIBLE);
+			showToast(getResources().getString(R.string.dadosInvisivel));
+			btiMostrarDados.setTitle(getResources().getString(R.string.mostrar));
+			mostrarDados = true;
+		}
 	}
 
 	boolean imprimir = true;
@@ -408,36 +447,7 @@ public class ModoBotoes extends FragmentActivity {
 			 finish();
 		 break;
 		case R.id.actMostrarOcultar:
-			if (mostrarDados) {
-				
-				dados.setVisibility(View.VISIBLE);
-				txtArduino01.setVisibility(View.VISIBLE);
-				txtArduino02.setVisibility(View.VISIBLE);
-				txtArduino03.setVisibility(View.VISIBLE);
-				txtArduino04.setVisibility(View.VISIBLE);
-				txtArduino05.setVisibility(View.VISIBLE);
-				txtArduino06.setVisibility(View.VISIBLE);
-				txtArduino07.setVisibility(View.VISIBLE);
-				showToast(getResources().getString(R.string.dadosVisiveis));
-				btiMostrarDados.setTitle(getResources().getString(R.string.ocultar));
-				mostrarDados = false;
-
-				
-			} else {
-				
-				dados.setVisibility(View.INVISIBLE);
-				txtArduino01.setVisibility(View.INVISIBLE);
-				txtArduino02.setVisibility(View.INVISIBLE);
-				txtArduino03.setVisibility(View.INVISIBLE);
-				txtArduino04.setVisibility(View.INVISIBLE);
-				txtArduino05.setVisibility(View.INVISIBLE);
-				txtArduino06.setVisibility(View.INVISIBLE);
-				txtArduino07.setVisibility(View.INVISIBLE);
-				showToast(getResources().getString(R.string.dadosInvisivel));
-				btiMostrarDados.setTitle(getResources().getString(R.string.mostrar));
-				mostrarDados = true;
-			}
-
+			mostrarEsconderTelaFundo();
 			break;
 
 		case R.id.actSobreApp:
