@@ -14,6 +14,10 @@ public class FollowLineModel {
     private String proporcinalValue;
     private String max;
     private String tempo;
+    private String tempod1;
+    private String tempod2;
+    private String tempod3;
+    private String tempod4;
     private String reta;
     private String maxInverse;
 
@@ -28,6 +32,10 @@ public class FollowLineModel {
                 "proporcinalValue: '200', " +
                 "max: '200', " +
                 "tempo: '60000', " +
+                "tempod1: '20000', " +
+                "tempod2: '30000', " +
+                "tempod3: '40000', " +
+                "tempod4: '50000', " +
                 "reta: '200'}]";
     }
 
@@ -103,6 +111,7 @@ public class FollowLineModel {
         this.tempo = tempo;
     }
 
+
     public String getReta() {
         return reta;
     }
@@ -117,5 +126,37 @@ public class FollowLineModel {
 
     public void setMaxInverse(String maxInverse) {
         this.maxInverse = maxInverse;
+    }
+
+    public String getTempod1() {
+        return tempod1;
+    }
+
+    public void setTempod1(String tempod1) {
+        this.tempod1 = tempod1;
+    }
+
+    public String getTempod2() {
+        return tempod2;
+    }
+
+    public void setTempod2(String tempod2) {
+        this.tempod2 = tempod2;
+    }
+
+    public String getTempod3() {
+        return tempod3;
+    }
+
+    public void setTempod3(String tempod3) {
+        this.tempod3 = tempod3;
+    }
+
+    public String getTempod4() {
+        return tempod4;
+    }
+
+    public void setTempod4(String tempod4) {
+        this.tempod4 = tempod4;
     }
 }

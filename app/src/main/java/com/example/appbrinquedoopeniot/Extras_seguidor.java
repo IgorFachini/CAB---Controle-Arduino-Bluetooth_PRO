@@ -50,7 +50,7 @@ public class Extras_seguidor extends FragmentActivity {
     Button btnParar, btnConectar, btnFrente, btnDireita, btnEsquerda, btnTras, btn1, btn2, btn3, btn4, btn5, btn6;
     TextView txtArduino01, txtArduino02, txtArduino03, txtArduino04, txtArduino05, txtArduino06, txtArduino07, txtNome;
     View dados;
-    EditText txtVTS, txtMaxInverse, txtProporcinalValue, txtMax, txtTempo, txtWeight1, txtWeight2, txtWeight3, txtWeight4,
+    EditText txtVTS, txtMaxInverse, txtProporcinalValue, txtMax, txtTempo,txtTempod1,txtTempod2,txtTempod3,txtTempod4, txtWeight1, txtWeight2, txtWeight3, txtWeight4,
             txtLinhaReta;
     public static final String PREFS_NAME_BlUETOOTH = "device";
     FragmentManager fragmentoSobreApp = getSupportFragmentManager();
@@ -124,6 +124,10 @@ public class Extras_seguidor extends FragmentActivity {
         txtMaxInverse = (EditText) findViewById(R.id.txtMaxInverse);
         txtProporcinalValue = (EditText) findViewById(R.id.txtProporcionalValue);
         txtTempo = (EditText) findViewById(R.id.txtTempo);
+        txtTempod1 = (EditText) findViewById(R.id.txtTempod1);
+        txtTempod2 = (EditText) findViewById(R.id.txtTempod2);
+        txtTempod3 = (EditText) findViewById(R.id.txtTempod3);
+        txtTempod4 = (EditText) findViewById(R.id.txtTempod4);
         txtMax = (EditText) findViewById(R.id.txtMax);
         txtMax.setFilters(new InputFilter[]{new InputFilterMinMax("0", "254")});
         txtWeight1 = (EditText) findViewById(R.id.txtWeight1);
@@ -259,6 +263,10 @@ public class Extras_seguidor extends FragmentActivity {
         follow.setProporcinalValue(txtProporcinalValue.getText().toString());
         follow.setMax(txtMax.getText().toString());
         follow.setTempo(txtTempo.getText().toString());
+        follow.setTempod1(txtTempod1.getText().toString());
+        follow.setTempod2(txtTempod2.getText().toString());
+        follow.setTempod3(txtTempod3.getText().toString());
+        follow.setTempod4(txtTempod4.getText().toString());
         follow.setReta(txtLinhaReta.getText().toString());
 
         dialogBuilder.setTitle("Nome do seguidor");
@@ -296,7 +304,11 @@ public class Extras_seguidor extends FragmentActivity {
     public void iniciar(View v) {
         String mensagem = "i:" + txtMaxInverse.getText().toString() + "&s:" + txtVTS.getText().toString()
                 + "&p:" + txtProporcinalValue.getText().toString()
-                + "&v:" + txtMax.getText().toString() + "&t:" + txtTempo.getText().toString() + "&l:"
+                + "&v:" + txtMax.getText().toString() + "&t:" + txtTempo.getText().toString()
+                + "&h:" + txtTempod1.getText().toString()
+                + "&j:" + txtTempod2.getText().toString()
+                + "&k:" + txtTempod3.getText().toString()
+                + "&o:" + txtTempod4.getText().toString()+ "&l:"
                 + txtLinhaReta.getText().toString() + "&1:" + txtWeight1.getText().toString() + "&2:"
                 + txtWeight2.getText().toString() + "&3:" + txtWeight3.getText().toString() + "&4:"
                 + txtWeight4.getText().toString() + "&g:g;";
@@ -655,6 +667,10 @@ public class Extras_seguidor extends FragmentActivity {
                 follow.setProporcinalValue(obj.getString("proporcinalValue"));
                 follow.setMax(obj.getString("max"));
                 follow.setTempo(obj.getString("tempo"));
+                follow.setTempod1(obj.getString("tempod1"));
+                follow.setTempod2(obj.getString("tempod2"));
+                follow.setTempod3(obj.getString("tempod3"));
+                follow.setTempod4(obj.getString("tempod4"));
                 follow.setReta(obj.getString("reta"));
 
                 // O mesmo para as demais propriedades...
@@ -683,6 +699,10 @@ public class Extras_seguidor extends FragmentActivity {
         txtProporcinalValue.setText(followLineData.get(followLineThis).getProporcinalValue());
         txtMax.setText(followLineData.get(followLineThis).getMax());
         txtTempo.setText(followLineData.get(followLineThis).getTempo());
+        txtTempod1.setText(followLineData.get(followLineThis).getTempod1());
+        txtTempod2.setText(followLineData.get(followLineThis).getTempod2());
+        txtTempod3.setText(followLineData.get(followLineThis).getTempod3());
+        txtTempod4.setText(followLineData.get(followLineThis).getTempod4());
 
 
     }
@@ -726,6 +746,10 @@ public class Extras_seguidor extends FragmentActivity {
         follow.setProporcinalValue(txtProporcinalValue.getText().toString());
         follow.setMax(txtMax.getText().toString());
         follow.setTempo(txtTempo.getText().toString());
+        follow.setTempod1(txtTempod1.getText().toString());
+        follow.setTempod2(txtTempod2.getText().toString());
+        follow.setTempod3(txtTempod3.getText().toString());
+        follow.setTempod4(txtTempod4.getText().toString());
         follow.setReta(txtLinhaReta.getText().toString());
         followLineData.set(followLineThis, follow);
 
@@ -746,6 +770,10 @@ public class Extras_seguidor extends FragmentActivity {
                 obj.put("proporcinalValue", c.getProporcinalValue());
                 obj.put("max", c.getMax());
                 obj.put("tempo", c.getTempo());
+                obj.put("tempod1", c.getTempod1());
+                obj.put("tempod2", c.getTempod2());
+                obj.put("tempod3", c.getTempod3());
+                obj.put("tempod4", c.getTempod4());
                 obj.put("reta", c.getReta());
                 obj.put("vts", c.getVts());
             } catch (JSONException e) {
