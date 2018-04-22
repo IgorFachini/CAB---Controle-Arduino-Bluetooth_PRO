@@ -1,10 +1,7 @@
-package com.example.appbrinquedoopeniot;
+package com.example.appbrinquedoopeniot.ui;
 
 import android.app.ActionBar;
 import android.app.ListActivity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -17,14 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.appbrinquedoopeniot.R;
+import com.example.appbrinquedoopeniot.model.FollowLineModel;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ChooseFollowLineData extends ListActivity {
@@ -47,7 +44,7 @@ public class ChooseFollowLineData extends ListActivity {
 		 */
 		ListView lv = getListView();
 		LayoutInflater inflater = getLayoutInflater();
-		View header = inflater.inflate(R.layout.activity_sup_pairededevices, lv, false);
+		View header = inflater.inflate(R.layout.activity_sup, lv, false);
 		((TextView) header.findViewById(R.id.textView)).setText("\nDados\n");
 		lv.addHeaderView(header, null, false);
 

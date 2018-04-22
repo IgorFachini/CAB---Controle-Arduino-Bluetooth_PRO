@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot;
+package com.example.appbrinquedoopeniot.service;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
@@ -31,7 +31,7 @@ import java.util.UUID;
  *           Handler writeHandler = t.getWriteHandler(); t.start();
  */
 @SuppressLint({ "DefaultLocale", "HandlerLeak" })
-class BluetoothThread extends Thread {
+public class BluetoothThread extends Thread {
 	
 
 	// Tag for logging
@@ -67,7 +67,7 @@ class BluetoothThread extends Thread {
 	 * e um Handler para as mensagens recebidas.
 	 *
 	 */
-	BluetoothThread(String address, Handler handler) {
+	public BluetoothThread(String address, Handler handler) {
 
 		this.address = address.toUpperCase();
 		this.readHandler = handler;
@@ -84,7 +84,7 @@ class BluetoothThread extends Thread {
 	 * Devolve o manipulador(Handler) de escrita para a conexão. As mensagens
 	 * recebidas por este manipulador(handler) sera escrito no Bluetooth socket.
 	 */
-	Handler getWriteHandler() {
+	public Handler getWriteHandler() {
 		return writeHandler;
 	}
 
@@ -123,7 +123,7 @@ class BluetoothThread extends Thread {
 	/**
 	 * Disconnect the streams and socket.
 	 */
-	void disconnect() {
+	public void disconnect() {
 
 		//if (inStream != null) {
 			try {

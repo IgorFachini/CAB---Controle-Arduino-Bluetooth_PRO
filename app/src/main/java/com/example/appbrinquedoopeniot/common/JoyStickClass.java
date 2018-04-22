@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot;
+package com.example.appbrinquedoopeniot.common;
 
 import android.app.Activity;
 import android.content.Context;

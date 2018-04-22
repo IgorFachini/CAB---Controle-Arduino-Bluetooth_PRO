@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot;
+package com.example.appbrinquedoopeniot.common;
 
 import android.text.InputFilter;
 import android.text.Spanned;

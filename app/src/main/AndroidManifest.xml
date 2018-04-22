@@ -26,31 +26,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ModoBotoes"
+            android:name=".ui.ModoBotoes"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".Values_bottons"
+            android:name=".ui.Values_bottons"
             android:label="@string/title_activity_values_bottons" >
         </activity>
         <activity
-            android:name=".PairedDevices"
+            android:name=".ui.PairedDevices"
             android:label="@string/title_activity_paired_devices" >
         </activity>
         <activity
-            android:name=".ChooseFollowLineData"
+            android:name=".ui.ChooseFollowLineData"
             android:label="Follows" >
         </activity>
         <activity
-            android:name=".ModoJoyStick"
+            android:name=".ui.ModoJoyStick"
             android:label="Joy" >
         </activity>
         <activity
-            android:name=".Values_Joystick"
+            android:name=".ui.Values_Joystick"
             android:label="@string/title_activity_values__joystick" >
         </activity>
         <activity
-            android:name=".Extras_seguidor"
+            android:name=".ui.Extras_seguidor"
             android:label="@string/title_activity_extras_seguidor" >
         </activity>
     </application>

@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot;
+package com.example.appbrinquedoopeniot.ui;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -31,13 +31,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appbrinquedoopeniot.service.BluetoothThread;
+import com.example.appbrinquedoopeniot.R;
+import com.example.appbrinquedoopeniot.common.InputFilterMinMax;
+import com.example.appbrinquedoopeniot.model.FollowLineModel;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

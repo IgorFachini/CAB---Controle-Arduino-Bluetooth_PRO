@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot;
+package com.example.appbrinquedoopeniot.common;
 
 /**
  * Created by latitude on 10/01/2017.

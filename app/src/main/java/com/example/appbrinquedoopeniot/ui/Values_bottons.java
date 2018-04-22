@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot;
+package com.example.appbrinquedoopeniot.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
+
+import com.example.appbrinquedoopeniot.R;
 
 public class Values_bottons extends Activity {
 	public static EditText EditFrente, EditDireita, EditEsquerda, EditTras, EditX, EditY, EditZ, EditA, EditB, EditC,

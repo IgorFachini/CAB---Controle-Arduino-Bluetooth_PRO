@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot;
+package com.example.appbrinquedoopeniot.ui;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -17,11 +17,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.appbrinquedoopeniot.R;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public class PairedDevices extends ListActivity {
 
@@ -39,7 +40,7 @@ public class PairedDevices extends ListActivity {
 		 */
 		ListView lv = getListView();
 		LayoutInflater inflater = getLayoutInflater();
-		View header = inflater.inflate(R.layout.activity_sup_pairededevices, lv, false);
+		View header = inflater.inflate(R.layout.activity_sup, lv, false);
 		((TextView) header.findViewById(R.id.textView)).setText("\nDispositivos pareados\n");
 		lv.addHeaderView(header, null, false);
 

@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.appbrinquedoopeniot.ui.Extras_seguidor;
+import com.example.appbrinquedoopeniot.ui.ModoBotoes;
+import com.example.appbrinquedoopeniot.ui.ModoJoyStick;
+
 public class Inicializador extends Activity {
 
 	int activityInicializador;

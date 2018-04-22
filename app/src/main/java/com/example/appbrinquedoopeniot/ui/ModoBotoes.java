@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot;
+package com.example.appbrinquedoopeniot.ui;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -23,6 +23,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.appbrinquedoopeniot.service.BluetoothThread;
+import com.example.appbrinquedoopeniot.R;
 
 /**
  * Activity principal que cuida referencia botoes da tela principal, e manipula
