@@ -57,5 +57,9 @@
     <string name="listarDadosSeguidor">Listar</string>
     <string name="AdicionarDadosSeguidor">Adicionar</string>
     <string name="editarDadosSeguidor">Editar Nome</string>
+    <string name="tv_bluetooth_encontrados">Bluetooth encontrados</string>
+    <string name="msg_searching_devices">Buscando por dispositivos</string>
+    <string name="title_activity_t">t</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>

@@ -149,7 +149,7 @@ public class Extras_seguidor extends FragmentActivity {
     public void listaDeDispositivos() {
         if (bluetoothPadrao.isEnabled()) {
             if (btt == null) {
-                Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+                Intent searchPairedDevicesIntent = new Intent(this, ListBluetooth.class);
                 startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
             } else {
                 interromperBluetooth();
