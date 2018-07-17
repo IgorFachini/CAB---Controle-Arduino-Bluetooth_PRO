@@ -68,6 +68,16 @@
             android:layout_height="70.0dip"
             android:background="@drawable/layout_botao_tras" />
     </LinearLayout>
+    <TextView
+        android:id="@+id/txtBtStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Status: "
+        android:textColor="@color/White"
+        android:textSize="10.0sp"
+        android:layout_above="@+id/FundoDados"
+        android:layout_alignLeft="@+id/FundoDados"/>
 
     <LinearLayout
         android:id="@+id/FundoDados"

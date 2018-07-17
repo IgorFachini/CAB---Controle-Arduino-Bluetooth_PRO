@@ -61,5 +61,8 @@
     <string name="msg_searching_devices">Buscando por dispositivos</string>
     <string name="title_activity_t">t</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="reconnect">Reconectar</string>
+    <string name="state">Status</string>
+    <string name="cancel">Cancelar</string>
 
 </resources>

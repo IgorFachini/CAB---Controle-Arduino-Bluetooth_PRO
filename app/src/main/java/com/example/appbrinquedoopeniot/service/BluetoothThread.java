@@ -8,6 +8,10 @@ import android.bluetooth.BluetoothSocket;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
 
@@ -62,13 +66,17 @@ public class BluetoothThread extends Thread {
 	// Buffer used to parse messages
 	private String rx_buffer = "";
 
+	BluetoothDevice remoteDevice;
+
+	Context context;
+
 	/**
 	 * Construtor da classe, recebe o endereço MAC do dispositivo bluetooth
 	 * e um Handler para as mensagens recebidas.
 	 *
 	 */
-	public BluetoothThread(String address, Handler handler) {
-
+	public BluetoothThread(Context context,String address, Handler handler) {
+		this.context = context;
 		this.address = address.toUpperCase();
 		this.readHandler = handler;
 
@@ -102,7 +110,7 @@ public class BluetoothThread extends Thread {
 		}
 
 		// Find the remote device
-		BluetoothDevice remoteDevice = adapter.getRemoteDevice(address);
+		remoteDevice = adapter.getRemoteDevice(address);
 
 		// Create a socket with the remote device using this protocol
 		socket = remoteDevice.createRfcommSocketToServiceRecord(uuid);
@@ -124,33 +132,39 @@ public class BluetoothThread extends Thread {
 	 * Disconnect the streams and socket.
 	 */
 	public void disconnect() {
+		try {
 
-		//if (inStream != null) {
-			try {
-				inStream.close();
-				inStream = null;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		//}
 
-		//if (outStream != null) {
-			try {
-				outStream.close();
-				outStream = null;
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (inStream != null) {
+				try {
+					inStream.close();
+					inStream = null;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-		//}
 
-		//if (socket != null) {
-			try {
-				socket.close();
-				socket = null;
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (outStream != null) {
+				try {
+					outStream.close();
+					outStream = null;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-		//}
+
+			if (socket != null) {
+				try {
+					socket.close();
+					socket = null;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			context.unregisterReceiver(bluetoothReceiver);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -248,6 +262,9 @@ public class BluetoothThread extends Thread {
 		try {
 			connect();
 			sendToReadHandler("CONNECTED");
+			//listen for bluetooth disconnect
+			IntentFilter disconnectIntent = new IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+			context.registerReceiver(bluetoothReceiver, disconnectIntent);
 		} catch (Exception e) {
 			Log.e(TAG, "Failed to connect!", e);
 			sendToReadHandler("CONNECTION FAILED");
@@ -278,4 +295,23 @@ public class BluetoothThread extends Thread {
 		disconnect();
 		sendToReadHandler("DISCONNECTED");
 	}
+
+	private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			BluetoothDevice eventDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+			if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
+				if (remoteDevice != null && remoteDevice.equals(eventDevice)){
+
+
+
+					sendToReadHandler("DISCONNECTED");
+				}
+			}
+		}
+	};
+
+
 }

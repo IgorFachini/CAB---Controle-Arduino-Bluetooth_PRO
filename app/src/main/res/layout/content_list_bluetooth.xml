@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_weight="1"
         android:padding="30dp"
         android:scrollbarAlwaysDrawVerticalTrack="true">
 
@@ -35,7 +34,7 @@
 
             <ListView
                 android:id="@+id/lv_bluetooth_encontrados"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
@@ -73,8 +72,8 @@
 
             <ListView
                 android:id="@+id/lv_bluetooth_pareados"
-                android:layout_width="0dp"
-                android:layout_height="300dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"

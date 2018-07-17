@@ -38,7 +38,7 @@ public class ModoBotoes extends FragmentActivity {
 
 	String frente, direita, esquerda, tras, x, y, z, a, b, c, conteudoAVoltar;
 	Button btnConectar, btnFrente, btnDireita, btnEsquerda, btnTras, btn1, btn2, btn3, btn4, btn5, btn6;
-	TextView txtArduino01, txtArduino02, txtArduino03, txtArduino04, txtArduino05, txtArduino06, txtArduino07;
+	TextView txtArduino01, txtArduino02, txtArduino03, txtArduino04, txtArduino05, txtArduino06, txtArduino07, txtStatus;
 	View dados;
 
 	public static final String PREFS_NAME_BlUETOOTH = "device";
@@ -67,6 +67,9 @@ public class ModoBotoes extends FragmentActivity {
 
 	// private static String address = "20:13:06:19:08:29";
 
+	public String deviceName;
+
+
 	/**
 	 * Criação da tela
 	 */
@@ -90,10 +93,12 @@ public class ModoBotoes extends FragmentActivity {
 		// Vereficamos se o aparelho possui adaptador Bluetooth
 
         referenciarElementosTela();
-		interromperBluetooth();
 		resgatarValoresBotoes();
 
-		
+		txtStatus.setText(getResources().getString(R.string.state) + " " + getResources().getString(R.string.desconectado));
+
+
+
 	}
 
 	public void referenciarElementosTela() {
@@ -106,6 +111,8 @@ public class ModoBotoes extends FragmentActivity {
 		txtArduino05 = (TextView) findViewById(R.id.txtArduino05);
 		txtArduino06 = (TextView) findViewById(R.id.txtArduino06);
 		txtArduino07 = (TextView) findViewById(R.id.txtArduino07);
+		txtStatus = findViewById(R.id.txtBtStatus);
+
 		btnConectar = (Button) findViewById(R.id.btnConectar);
 		btnFrente = (Button) findViewById(R.id.bt_frente);
 		btnDireita = (Button) findViewById(R.id.bt_direita);
@@ -138,10 +145,14 @@ public class ModoBotoes extends FragmentActivity {
 	public void interromperBluetooth(){
 		if(btt != null){
 			btnConectar.setText(getResources().getString(R.string.conectar));
-			btnConectar.setEnabled(true);
 			btt.interrupt();
 			btt.disconnect();
 			btt = null;
+			txtStatus.setText(getResources().getString(R.string.state)
+					+ " "
+					+ getResources().getString(R.string.desconectado)
+					+	" de " +
+					deviceName);
 		}
 		
 	}
@@ -151,13 +162,17 @@ public class ModoBotoes extends FragmentActivity {
 		if (bluetoothPadrao == null) {
 			showTextWithColorRed(getResources().getString(R.string.dispostivoNaoPossuiBluetooth));
 		} else {
-			if (!bluetoothPadrao.isEnabled()) {
+			if(btt != null){
+				interromperBluetooth();
+			}else {
+				if (!bluetoothPadrao.isEnabled()) {
 
-				Intent novoIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-				startActivityForResult(novoIntent, REQUEST_ENABLE_BT);
-			} else {
+					Intent novoIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+					startActivityForResult(novoIntent, REQUEST_ENABLE_BT);
+				} else {
 
-				listaDeDispositivos();
+					listaDeDispositivos();
+				}
 			}
 		}
 
@@ -169,8 +184,7 @@ public class ModoBotoes extends FragmentActivity {
 		if (!bluetoothPadrao.isEnabled()) {
 			showToast(getResources().getString(R.string.ativeBluetooth));
 		} else {
-			btnConectar.setText(getResources().getString(R.string.conectando));
-			btnConectar.setEnabled(false);
+			btnConectar.setText(getResources().getString(R.string.cancel));
 			try {
 				interromperBluetooth();
 //				Thread.sleep(1000);
@@ -313,7 +327,14 @@ public class ModoBotoes extends FragmentActivity {
 		SharedPreferences configDevice = getSharedPreferences(PREFS_NAME_BlUETOOTH, MODE_PRIVATE);
 		if (resultCode == RESULT_OK) {
 			if (btt == null) {
-				btt = new BluetoothThread(configDevice.getString("btDevAddress", ""), new Handler() {
+				deviceName = configDevice.getString("btDevName","");
+				txtStatus.setText(getResources().getString(R.string.state)
+						+ " "
+						+ getResources().getString(R.string.conectando)
+						+	" " +
+						deviceName);
+
+				btt = new BluetoothThread(this,configDevice.getString("btDevAddress", ""), new Handler() {
 
 					@Override
 					public void handleMessage(Message message) {
@@ -326,9 +347,10 @@ public class ModoBotoes extends FragmentActivity {
                         switch (s) {
                             case "CONNECTED":
                                 btnConectar.setText(getResources().getString(R.string.desconectar));
-                                btnConectar.setEnabled(true);
                                 showTextWithColorGreen(getResources().getString(R.string.conectado));
-                                break;
+								txtStatus.setText("Conectado em: " + deviceName);
+
+								break;
                             case "DISCONNECTED":
                                 showToast(getResources().getString(R.string.desconectado));
                                 interromperBluetooth();
@@ -384,8 +406,7 @@ public class ModoBotoes extends FragmentActivity {
 				// Run the thread
 				btt.start();
 
-				btnConectar.setText(getResources().getString(R.string.conectando));
-				btnConectar.setEnabled(false);
+				btnConectar.setText(getResources().getString(R.string.cancel));
 			}
 			// break;
 
@@ -412,6 +433,10 @@ public class ModoBotoes extends FragmentActivity {
 	public boolean onMenuItemSelected(int panel, MenuItem item) {
 
 		switch (item.getItemId()) {
+
+			case R.id.actReconnect:
+				reconect(null);
+				break;
 		case android.R.id.home:
 			showToast(getResources().getString(R.string.sair));
 

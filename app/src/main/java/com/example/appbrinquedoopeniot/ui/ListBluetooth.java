@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
@@ -14,8 +15,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -42,13 +45,15 @@ public class ListBluetooth extends AppCompatActivity {
     private ArrayAdapter<String> adapterEncontrados;
 
     public static final String PREFS_NAME_BlUETOOTH = "device";
-
-
+    ListView lvBluetoothEncontrados;
+    ListView lvBluetoothPareados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_bluetooth);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -61,8 +66,8 @@ public class ListBluetooth extends AppCompatActivity {
         registerReceiver(receberInfo, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
 
         progressBar = findViewById(R.id.progressBar);
-        ListView lvBluetoothEncontrados = findViewById(R.id.lv_bluetooth_encontrados);
-        ListView lvBluetoothPareados = findViewById(R.id.lv_bluetooth_pareados);
+        lvBluetoothEncontrados = findViewById(R.id.lv_bluetooth_encontrados);
+        lvBluetoothPareados = findViewById(R.id.lv_bluetooth_pareados);
 
         progressBar.setVisibility(View.INVISIBLE);
 
@@ -77,6 +82,9 @@ public class ListBluetooth extends AppCompatActivity {
 
         lvBluetoothEncontrados.setAdapter(adapterEncontrados);
         lvBluetoothPareados.setAdapter(adapterPareados);
+
+        setDynamicHeight(lvBluetoothEncontrados);
+        setDynamicHeight(lvBluetoothPareados);
 
 
         if (!bluetoothAdapter.isEnabled()) {
@@ -124,6 +132,25 @@ public class ListBluetooth extends AppCompatActivity {
         });
     }
 
+    public static void setDynamicHeight(ListView listView) {
+        ListAdapter adapter = listView.getAdapter();
+        //check adapter if null
+        if (adapter == null) {
+            return;
+        }
+        int height = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View listItem = adapter.getView(i, null, listView);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            height += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams layoutParams = listView.getLayoutParams();
+        layoutParams.height = height + (listView.getDividerHeight() * (adapter.getCount() - 1));
+        listView.setLayoutParams(layoutParams);
+        listView.requestLayout();
+    }
+
     public void enviarDeviceEscolhido(BluetoothDevice device){
         Intent returnIntent = new Intent();
         returnIntent.putExtra("btDevName", device.getName());
@@ -131,6 +158,8 @@ public class ListBluetooth extends AppCompatActivity {
         SharedPreferences configDevice = getSharedPreferences(PREFS_NAME_BlUETOOTH, MODE_PRIVATE);
         SharedPreferences.Editor editorDevice = configDevice.edit();
         editorDevice.putString("btDevAddress", device.getAddress());
+        editorDevice.putString("btDevName", device.getName());
+
         editorDevice.commit();
 
 
@@ -194,6 +223,9 @@ public class ListBluetooth extends AppCompatActivity {
     private void iniciarBusca() {
         Toast.makeText(getBaseContext(),getResources().getString(R.string.msg_searching_devices),Toast.LENGTH_SHORT).show();
         bluetoothDispositivosEncontrados.clear();
+        bluetoothEncontrados.clear();
+        lvBluetoothEncontrados.setAdapter(adapterEncontrados);
+//        lvBluetoothEncontrados.
         IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         this.registerReceiver(receberInfo, intentFilter);
         bluetoothAdapter.startDiscovery();
@@ -238,6 +270,8 @@ public class ListBluetooth extends AppCompatActivity {
                     }
                 }
                 ordenarLista(bluetoothEncontrados,bluetoothDispositivosEncontrados);
+                setDynamicHeight(lvBluetoothEncontrados);
+
             }
             progressBar.setVisibility(View.INVISIBLE);
         }
@@ -252,5 +286,7 @@ public class ListBluetooth extends AppCompatActivity {
             }
         }
         adapterPareados.notifyDataSetChanged();
+        setDynamicHeight(lvBluetoothPareados);
+
     }
 }

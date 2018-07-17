@@ -9,6 +9,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.appbrinquedoopeniot.ui.ModoBotoes" >
 
+
+    <TextView
+        android:id="@+id/txtBtStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Status: "
+        android:textColor="@color/White"
+        android:textSize="10.0sp"
+        android:layout_above="@+id/botoeBaixo"
+
+        />
+
     <RelativeLayout
         android:id="@+id/botoeBaixo"
         android:layout_width="wrap_content"
@@ -69,6 +82,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/liBottomLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
@@ -548,16 +562,6 @@
             </LinearLayout>
         </ScrollView>
 
-        <Button
-            android:id="@+id/btnReConectar"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="10dp"
-            android:layout_toStartOf="@+id/btnConectar"
-            android:background="@drawable/ic_reconect"
-            android:onClick="reconect" />
-
         <TextView
             android:id="@+id/txtNome"
             android:layout_width="match_parent"
@@ -565,7 +569,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Valores 1"
-            android:layout_toStartOf="@+id/btnReConectar"
+            android:layout_toStartOf="@+id/btnConectar"
             android:textSize="20sp" />
     </RelativeLayout>
 
