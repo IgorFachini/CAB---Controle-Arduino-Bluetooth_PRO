@@ -94,33 +94,22 @@ public class ListBluetooth extends AppCompatActivity {
             }
         });
 
-        lvBluetoothEncontrados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        lvBluetoothEncontrados.setOnItemClickListener(new CustomBtClickListener());
+        lvBluetoothPareados.setOnItemClickListener(new CustomBtClickListener());
+    }
 
-                BluetoothDevice device = (BluetoothDevice) view.getTag();
+    public class CustomBtClickListener implements AdapterView.OnItemClickListener {
 
-                if(device != null){
-                    enviarDeviceEscolhido(device);
-                } else {
-                    Toast.makeText(getBaseContext(), "Nulo", Toast.LENGTH_SHORT).show();
-                }
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            BluetoothDevice device = (BluetoothDevice) view.getTag();
+
+            if(device != null){
+                enviarDeviceEscolhido(device);
+            } else {
+                Toast.makeText(getBaseContext(), "Nullo", Toast.LENGTH_SHORT).show();
             }
-        });
-
-        lvBluetoothPareados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                BluetoothDevice device = (BluetoothDevice) view.getTag();
-
-                if(device != null){
-                    enviarDeviceEscolhido(device);
-                } else {
-                    Toast.makeText(getBaseContext(), "Nullo", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        }
     }
 
     public static void setDynamicHeight(ListView listView) {
