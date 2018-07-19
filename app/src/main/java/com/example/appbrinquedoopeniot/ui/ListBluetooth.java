@@ -9,21 +9,19 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.appbrinquedoopeniot.R;
+import com.example.appbrinquedoopeniot.adapter.BluetoothListAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,13 +34,10 @@ public class ListBluetooth extends AppCompatActivity {
 
     private ProgressBar progressBar;
 
-    private ArrayList<String> bluetoothPareados;
-    private ArrayList<String> bluetoothEncontrados;
-
     private ArrayList<BluetoothDevice> bluetoothDispositivosPareados, bluetoothDispositivosEncontrados;
 
-    private ArrayAdapter<String> adapterPareados;
-    private ArrayAdapter<String> adapterEncontrados;
+    private BluetoothListAdapter adapterPareados;
+    private BluetoothListAdapter adapterEncontrados;
 
     public static final String PREFS_NAME_BlUETOOTH = "device";
     ListView lvBluetoothEncontrados;
@@ -74,18 +69,14 @@ public class ListBluetooth extends AppCompatActivity {
         bluetoothDispositivosPareados = new ArrayList<>();
         bluetoothDispositivosEncontrados = new ArrayList<>();
 
-        bluetoothPareados = new ArrayList<>();
-        bluetoothEncontrados = new ArrayList<>();
+        adapterPareados = new BluetoothListAdapter(this,bluetoothDispositivosPareados);
+        adapterEncontrados = new BluetoothListAdapter(this,bluetoothDispositivosEncontrados);
 
-        adapterEncontrados = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, bluetoothEncontrados);
-        adapterPareados = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, bluetoothPareados);
-
-        lvBluetoothEncontrados.setAdapter(adapterEncontrados);
         lvBluetoothPareados.setAdapter(adapterPareados);
+        lvBluetoothEncontrados.setAdapter(adapterEncontrados);
 
         setDynamicHeight(lvBluetoothEncontrados);
         setDynamicHeight(lvBluetoothPareados);
-
 
         if (!bluetoothAdapter.isEnabled()) {
             ligarBluetooth();
@@ -107,12 +98,12 @@ public class ListBluetooth extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                BluetoothDevice device = bluetoothDispositivosEncontrados.get(i);
+                BluetoothDevice device = (BluetoothDevice) view.getTag();
 
-                if(bluetoothEncontrados.get(i).contains(device.getAddress())){
+                if(device != null){
                     enviarDeviceEscolhido(device);
                 } else {
-//                    Toast.makeText(getBaseContext(), getResources().getString(R.string.msg_erro_bluetooth_encontrado_nao_coincidem), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Nulo", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -121,12 +112,12 @@ public class ListBluetooth extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                BluetoothDevice device = bluetoothDispositivosPareados.get(i);
+                BluetoothDevice device = (BluetoothDevice) view.getTag();
 
-                if(bluetoothPareados.get(i).contains(device.getAddress())){
+                if(device != null){
                     enviarDeviceEscolhido(device);
                 } else {
-//                    Toast.makeText(getBaseContext(), getResources().getString(R.string.msg_erro_bluetooth_pareado_nao_coincidem), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Nullo", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -160,7 +151,7 @@ public class ListBluetooth extends AppCompatActivity {
         editorDevice.putString("btDevAddress", device.getAddress());
         editorDevice.putString("btDevName", device.getName());
 
-        editorDevice.commit();
+        editorDevice.apply();
 
 
         setResult(RESULT_OK, returnIntent);
@@ -171,21 +162,11 @@ public class ListBluetooth extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         buscarDispositivosPareados();
-        ordenarLista(bluetoothPareados, bluetoothDispositivosPareados);
+        ordenarLista(bluetoothDispositivosPareados);
         ligarBluetooth();
     }
 
-    private void ordenarLista(ArrayList<String> bluetoothNames, ArrayList<BluetoothDevice> devices){
-        //Comparador usado para ordenar uma lista em ordem alfabetica
-        Comparator<String> ALPHABETIC_ORDER_NAMES = new Comparator<String>() {
-            @Override
-            public int compare(String device1, String device2) {
-                return device1.compareTo(device2);
-            }
-        };
-        //Ordena a lista em ordem Alfabetica
-        Collections.sort(bluetoothNames, ALPHABETIC_ORDER_NAMES);
-
+    private void ordenarLista(ArrayList<BluetoothDevice> devices){
         //Comparador usado para ordenar uma lista em ordem alfabetica
         Comparator<BluetoothDevice> ALPHABETIC_ORDER_DEVICES = new Comparator<BluetoothDevice>() {
             @Override
@@ -205,25 +186,9 @@ public class ListBluetooth extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            /*case R.id.menu_ligar:
-                ligarBluetooth();
-                break;
-
-            case R.id.menu_desligar:
-                desligarBluetooth();
-                break;*/
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void iniciarBusca() {
         Toast.makeText(getBaseContext(),getResources().getString(R.string.msg_searching_devices),Toast.LENGTH_SHORT).show();
         bluetoothDispositivosEncontrados.clear();
-        bluetoothEncontrados.clear();
         lvBluetoothEncontrados.setAdapter(adapterEncontrados);
 //        lvBluetoothEncontrados.
         IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -242,7 +207,7 @@ public class ListBluetooth extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            Message msg = Message.obtain();
+//            Message msg = Message.obtain();
             String action = intent.getAction();
 
             if(BluetoothDevice.ACTION_FOUND.equals(action)){
@@ -251,7 +216,6 @@ public class ListBluetooth extends AppCompatActivity {
                 //Log.d("TAG","entrou no action found");
                 if(bluetoothDispositivosPareados.size() < 1) {
                     //Log.d("TAG","entrou no if size < 1");
-                    bluetoothEncontrados.add(device.getName()+"\n"+device.getAddress());
                     bluetoothDispositivosEncontrados.add(device);
                     adapterEncontrados.notifyDataSetChanged();
                 } else {
@@ -262,14 +226,13 @@ public class ListBluetooth extends AppCompatActivity {
                             flag = false;
                         }
                     }
-                    if(flag == true) {
+                    if(flag) {
                         //Log.d("TAG","entrou no if flag == true");
-                        bluetoothEncontrados.add(device.getName()+"\n"+device.getAddress());
                         bluetoothDispositivosEncontrados.add(device);
                         adapterEncontrados.notifyDataSetChanged();
                     }
                 }
-                ordenarLista(bluetoothEncontrados,bluetoothDispositivosEncontrados);
+                ordenarLista(bluetoothDispositivosEncontrados);
                 setDynamicHeight(lvBluetoothEncontrados);
 
             }
@@ -280,10 +243,7 @@ public class ListBluetooth extends AppCompatActivity {
     private void buscarDispositivosPareados() {
         Set<BluetoothDevice> pairedDevice = bluetoothAdapter.getBondedDevices();
         if(pairedDevice.size() > 0) {
-            for(BluetoothDevice device : pairedDevice) {
-                bluetoothPareados.add(device.getName()+"\n"+device.getAddress());
-                bluetoothDispositivosPareados.add(device);
-            }
+            bluetoothDispositivosPareados.addAll(pairedDevice);
         }
         adapterPareados.notifyDataSetChanged();
         setDynamicHeight(lvBluetoothPareados);
