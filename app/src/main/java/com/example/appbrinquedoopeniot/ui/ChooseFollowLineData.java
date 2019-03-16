@@ -44,7 +44,7 @@ public class ChooseFollowLineData extends ListActivity {
 		 */
 		ListView lv = getListView();
 		LayoutInflater inflater = getLayoutInflater();
-		View header = inflater.inflate(R.layout.activity_sup, lv, false);
+		View header = inflater.inflate(R.layout.activity_list_bluetooth, lv, false);
 		((TextView) header.findViewById(R.id.textView)).setText("\nDados\n");
 		lv.addHeaderView(header, null, false);
 
@@ -116,7 +116,7 @@ public class ChooseFollowLineData extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.mn_paired_devices, menu);
+		getMenuInflater().inflate(R.menu.mn_list_bluetooth, menu);
 		ActionBar ab = getActionBar();
 		ab.setDisplayHomeAsUpEnabled(true);
 		return true;

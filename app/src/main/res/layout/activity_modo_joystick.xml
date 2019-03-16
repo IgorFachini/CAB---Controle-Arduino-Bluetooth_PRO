@@ -94,18 +94,32 @@
         android:textColor="@color/White"
         android:textSize="13.0dip" />
 
+    <TextView
+        android:id="@+id/txtBtStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Status: "
+        android:textColor="@color/White"
+        android:textSize="10.0sp"
+        android:layout_above="@+id/FundoDados"
+        android:layout_alignLeft="@+id/FundoDados"
+        />
+
     <LinearLayout
         android:id="@+id/FundoDados"
         android:layout_width="100.0dip"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="0dp"
         android:layout_toEndOf="@id/layout_joystick"
         android:background="@color/Transparent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="visible" >
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/txtArduino01"
@@ -252,15 +266,4 @@
                 android:background="@drawable/layout_botao_z" />
         </LinearLayout>
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/btnReConectar"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_margin="10dp"
-        android:layout_toEndOf="@+id/btnConectar"
-        android:background="@drawable/ic_reconect"
-        android:onClick="reconect" />
-
 </RelativeLayout>

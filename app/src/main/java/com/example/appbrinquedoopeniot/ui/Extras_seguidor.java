@@ -51,7 +51,7 @@ public class Extras_seguidor extends FragmentActivity {
 
     String frente, direita, esquerda, tras, x, y, z, a, b, c, conteudoAVoltar;
     Button btnParar, btnConectar, btnFrente, btnDireita, btnEsquerda, btnTras, btn1, btn2, btn3, btn4, btn5, btn6;
-    TextView txtArduino01, txtArduino02, txtArduino03, txtArduino04, txtArduino05, txtArduino06, txtArduino07, txtNome;
+    TextView txtArduino01, txtArduino02, txtArduino03, txtArduino04, txtArduino05, txtArduino06, txtArduino07, txtNome,txtStatus;
     View dados;
     EditText txtVTS, txtMaxInverse, txtProporcinalValue, txtMax, txtTempo,txtTempod1,txtTempod2,txtTempod3,txtTempod4, txtWeight1, txtWeight2, txtWeight3, txtWeight4,
             txtLinhaReta;
@@ -81,6 +81,9 @@ public class Extras_seguidor extends FragmentActivity {
     boolean isClickPause = false;
     long tempoQuandoParado = 0;
 
+    public String deviceName;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,9 +98,10 @@ public class Extras_seguidor extends FragmentActivity {
         Value_Bottons = new Intent(this, Values_bottons.class);
         bluetoothPadrao = BluetoothAdapter.getDefaultAdapter();
 
-        interromperBluetooth();
         referenciarElementosTela();
 		resgatarValoresBotoes();
+        txtStatus.setText(getResources().getString(R.string.state) + " " + getResources().getString(R.string.desconectado));
+
 
     }
 
@@ -111,6 +115,7 @@ public class Extras_seguidor extends FragmentActivity {
         txtArduino05 = (TextView) findViewById(R.id.txtArduino05);
         txtArduino06 = (TextView) findViewById(R.id.txtArduino06);
         txtArduino07 = (TextView) findViewById(R.id.txtArduino07);
+        txtStatus = findViewById(R.id.txtBtStatus);
         txtNome = (TextView) findViewById(R.id.txtNome);
         btnConectar = (Button) findViewById(R.id.btnConectar);
         btnFrente = (Button) findViewById(R.id.bt_frente);
@@ -149,7 +154,7 @@ public class Extras_seguidor extends FragmentActivity {
     public void listaDeDispositivos() {
         if (bluetoothPadrao.isEnabled()) {
             if (btt == null) {
-                Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+                Intent searchPairedDevicesIntent = new Intent(this, ListBluetooth.class);
                 startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
             } else {
                 interromperBluetooth();
@@ -161,11 +166,15 @@ public class Extras_seguidor extends FragmentActivity {
     public void interromperBluetooth() {
         if (btt != null) {
             btnConectar.setText(getResources().getString(R.string.conectar));
-            btnConectar.setEnabled(true);
+//            btnConectar.setEnabled(true);
             btt.interrupt();
             btt.disconnect();
             btt = null;
-
+            txtStatus.setText(getResources().getString(R.string.state)
+                    + " "
+                    + getResources().getString(R.string.desconectado)
+                    +	" de " +
+                    deviceName);
         }
 
     }
@@ -175,13 +184,17 @@ public class Extras_seguidor extends FragmentActivity {
         if (bluetoothPadrao == null) {
             showTextWithColorRed(getResources().getString(R.string.dispostivoNaoPossuiBluetooth));
         } else {
-            if (!bluetoothPadrao.isEnabled()) {
+            if(btt != null){
+                interromperBluetooth();
+            }else {
+                if (!bluetoothPadrao.isEnabled()) {
 
-                Intent novoIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(novoIntent, REQUEST_ENABLE_BT);
-            } else {
+                    Intent novoIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(novoIntent, REQUEST_ENABLE_BT);
+                } else {
 
-                listaDeDispositivos();
+                    listaDeDispositivos();
+                }
             }
         }
 
@@ -192,8 +205,8 @@ public class Extras_seguidor extends FragmentActivity {
         if (!bluetoothPadrao.isEnabled()) {
             showToast(getResources().getString(R.string.ativeBluetooth));
         } else {
-            btnConectar.setText(getResources().getString(R.string.conectando));
-            btnConectar.setEnabled(false);
+            btnConectar.setText(getResources().getString(R.string.cancel));
+//            btnConectar.setEnabled(false);
             try {
                 interromperBluetooth();
 //				Thread.sleep(1000);
@@ -460,7 +473,14 @@ public class Extras_seguidor extends FragmentActivity {
         SharedPreferences configDevice = getSharedPreferences(PREFS_NAME_BlUETOOTH, MODE_PRIVATE);
         if (resultCode == RESULT_OK) {
             if (btt == null) {
-                btt = new BluetoothThread(configDevice.getString("btDevAddress", ""), new Handler() {
+                deviceName = configDevice.getString("btDevName","");
+                txtStatus.setText(getResources().getString(R.string.state)
+                        + " "
+                        + getResources().getString(R.string.conectando)
+                        +	" " +
+                        deviceName);
+
+                btt = new BluetoothThread(this,configDevice.getString("btDevAddress", ""), new Handler() {
 
                     @Override
                     public void handleMessage(Message message) {
@@ -473,8 +493,10 @@ public class Extras_seguidor extends FragmentActivity {
                         switch (s) {
                             case "CONNECTED":
                                 btnConectar.setText(getResources().getString(R.string.desconectar));
-                                btnConectar.setEnabled(true);
+//                                btnConectar.setEnabled(true);
                                 showTextWithColorGreen(getResources().getString(R.string.conectado));
+                                txtStatus.setText("Conectado em: " + deviceName);
+
                                 break;
                             case "DISCONNECTED":
                                 showToast(getResources().getString(R.string.desconectado));
@@ -531,8 +553,8 @@ public class Extras_seguidor extends FragmentActivity {
                 // Run the thread
                 btt.start();
 
-                btnConectar.setText(getResources().getString(R.string.conectando));
-                btnConectar.setEnabled(false);
+                btnConectar.setText(getResources().getString(R.string.cancel));
+//                btnConectar.setEnabled(false);
             }
             // break;
 
@@ -560,6 +582,10 @@ public class Extras_seguidor extends FragmentActivity {
     public boolean onMenuItemSelected(int panel, MenuItem item) {
 
         switch (item.getItemId()) {
+
+            case R.id.actReconnect:
+                reconect(null);
+                break;
             case android.R.id.home:
                 showToast(getResources().getString(R.string.sair));
                 interromperBluetooth();

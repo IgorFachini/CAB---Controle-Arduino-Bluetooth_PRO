@@ -71,6 +71,17 @@
                 android:background="@drawable/layout_botao_tras" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/txtBtStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Status: "
+            android:textColor="@color/White"
+            android:textSize="10.0sp"
+            android:layout_above="@+id/FundoDados"
+            android:layout_alignLeft="@+id/FundoDados"/>
+
         <LinearLayout
             android:id="@+id/FundoDados"
             android:layout_width="100.0dip"
@@ -236,16 +247,6 @@
                     android:background="@drawable/layout_botao_c" />
             </LinearLayout>
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btnReConectar"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toEndOf="@+id/btnConectar"
-            android:background="@drawable/ic_reconect"
-            android:onClick="reconect" />
 
     </RelativeLayout>
 

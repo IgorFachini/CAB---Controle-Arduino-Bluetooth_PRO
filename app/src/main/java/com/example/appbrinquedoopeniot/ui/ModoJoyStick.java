@@ -44,11 +44,12 @@ public class ModoJoyStick extends FragmentActivity {
 
 	String x, y, z, a, b, c;
 	Button btn1, btn2, btn3, btn4, btn5, btn6;
-	TextView txtArduino01, txtArduino02, txtArduino03, txtArduino04, txtArduino05, txtArduino06, txtArduino07;
+	TextView txtArduino01, txtArduino02, txtArduino03, txtArduino04, txtArduino05, txtArduino06, txtArduino07, txtStatus;
 	View dados;
 	SharedPreferences configValores;
 	SharedPreferences.Editor editorValores;
 	JoyStickClass js;
+	public String deviceName;
 	FragmentManager fragmentoSobreApp = getSupportFragmentManager();
 	public static final String PREFS_NAME_VALORES_JOY = "valoresJoy";
 	public static final String PREFS_NAME_CLOSE = "inicializador";
@@ -84,6 +85,8 @@ public class ModoJoyStick extends FragmentActivity {
 		values_joystick = new Intent(this, Values_Joystick.class);
 
 		referenciarElementosTela();
+		txtStatus.setText(getResources().getString(R.string.state) + " " + getResources().getString(R.string.desconectado));
+
 
 	}
 
@@ -97,6 +100,7 @@ public class ModoJoyStick extends FragmentActivity {
 		txtArduino05 = (TextView) findViewById(R.id.txtArduino05);
 		txtArduino06 = (TextView) findViewById(R.id.txtArduino06);
 		txtArduino07 = (TextView) findViewById(R.id.txtArduino07);
+		txtStatus = findViewById(R.id.txtBtStatus);
 		btnConectar = (Button) findViewById(R.id.btnConectar);
 		btn1 = (Button) findViewById(R.id.bt_x);
 		btn2 = (Button) findViewById(R.id.bt_y);
@@ -104,6 +108,19 @@ public class ModoJoyStick extends FragmentActivity {
 		btn4 = (Button) findViewById(R.id.bt_a);
 		btn5 = (Button) findViewById(R.id.bt_b);
 		btn6 = (Button) findViewById(R.id.bt_c);
+
+		btnConectar.setOnLongClickListener(new View.OnLongClickListener()
+		{
+
+			@Override
+			public boolean onLongClick(View v)
+			{
+
+				reconect(null);
+
+				return false;
+			}
+		});
 
 	}
 
@@ -297,7 +314,7 @@ public class ModoJoyStick extends FragmentActivity {
 	public void listaDeDispositivos() {
 		if (bluetoothPadrao.isEnabled()) {
 			if (btt == null) {
-				Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
+				Intent searchPairedDevicesIntent = new Intent(this, ListBluetooth.class);
 				startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
 			} else {
 				interromperBluetooth();
@@ -309,26 +326,34 @@ public class ModoJoyStick extends FragmentActivity {
 	public void interromperBluetooth() {
 		if (btt != null) {
             btnConectar.setText(getResources().getString(R.string.conectar));
-			btnConectar.setEnabled(true);
+//			btnConectar.setEnabled(true);
 			btt.interrupt();
 			btt.disconnect();
 			btt = null;
+			txtStatus.setText(getResources().getString(R.string.state)
+					+ " "
+					+ getResources().getString(R.string.desconectado)
+					+	" de " +
+					deviceName);
 		}
 
 	}
 
 	public void connectButtonPressed(View v) {
-
 		if (bluetoothPadrao == null) {
             showTextWithColorRed(getResources().getString(R.string.dispostivoNaoPossuiBluetooth));
 		} else {
-			if (!bluetoothPadrao.isEnabled()) {
+			if(btt != null){
+				interromperBluetooth();
+			}else {
+				if (!bluetoothPadrao.isEnabled()) {
 
-				Intent novoIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-				startActivityForResult(novoIntent, REQUEST_ENABLE_BT);
-			} else {
+					Intent novoIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+					startActivityForResult(novoIntent, REQUEST_ENABLE_BT);
+				} else {
 
-				listaDeDispositivos();
+					listaDeDispositivos();
+				}
 			}
 		}
 
@@ -373,7 +398,16 @@ public class ModoJoyStick extends FragmentActivity {
         SharedPreferences configDevice = getSharedPreferences(PREFS_NAME_BlUETOOTH, MODE_PRIVATE);
         if (resultCode == RESULT_OK) {
             if (btt == null) {
-                btt = new BluetoothThread(configDevice.getString("btDevAddress", ""), new Handler() {
+            	deviceName = configDevice.getString("btDevName","");
+				txtStatus.setText("Conectando em: " + deviceName);
+				txtStatus.setText(getResources().getString(R.string.state)
+						+ " "
+						+ getResources().getString(R.string.conectando)
+						+	" " +
+						deviceName);
+
+				btt = new BluetoothThread(this,configDevice.getString("btDevAddress", ""), new Handler() {
+
 
                     @Override
                     public void handleMessage(Message message) {
@@ -386,9 +420,10 @@ public class ModoJoyStick extends FragmentActivity {
                         switch (s) {
                             case "CONNECTED":
                                 btnConectar.setText(getResources().getString(R.string.desconectar));
-                                btnConectar.setEnabled(true);
+//                                btnConectar.setEnabled(true);
                                 showTextWithColorGreen(getResources().getString(R.string.conectado));
-                                break;
+								txtStatus.setText("Conectado em: " + deviceName);
+								break;
                             case "DISCONNECTED":
                                 showToast(getResources().getString(R.string.desconectado));
                                 interromperBluetooth();
@@ -444,8 +479,8 @@ public class ModoJoyStick extends FragmentActivity {
                 // Run the thread
                 btt.start();
 
-                btnConectar.setText(getResources().getString(R.string.conectando));
-                btnConectar.setEnabled(false);
+                btnConectar.setText(getResources().getString(R.string.cancel));
+//                btnConectar.setEnabled(false);
             }
             // break;
 
@@ -458,13 +493,13 @@ public class ModoJoyStick extends FragmentActivity {
 		if (!bluetoothPadrao.isEnabled()) {
 			Toast.makeText(getApplicationContext(), "Ative o bluetooth", Toast.LENGTH_LONG).show();
 		} else {
-			btnConectar.setText("Conectando...");
-			btnConectar.setEnabled(false);
+			btnConectar.setText(getResources().getString(R.string.cancel));
+//			btnConectar.setEnabled(false);
 			try {
 				interromperBluetooth();
-				Thread.sleep(1000);
+//				Thread.sleep(1000);
 				connectWithBluetooth(RESULT_OK);
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -721,7 +756,11 @@ public class ModoJoyStick extends FragmentActivity {
 
 		switch (item.getItemId()) {
 
-		case R.id.ckbDirecoes8:
+			case R.id.actReconnect:
+				reconect(null);
+				break;
+
+			case R.id.ckbDirecoes8:
 			item.setChecked(!item.isChecked());
 
 			if (ckbDirecao8.isChecked()) {
