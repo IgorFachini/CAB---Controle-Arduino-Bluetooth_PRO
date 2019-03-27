@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot.ui;
+package com.wickedbotz.cab.ui;
 
 import android.app.ActionBar;
 import android.app.ListActivity;
@@ -14,8 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.appbrinquedoopeniot.R;
-import com.example.appbrinquedoopeniot.model.FollowLineModel;
+import com.wickedbotz.cab.R;
+import com.wickedbotz.cab.model.FollowLineModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;

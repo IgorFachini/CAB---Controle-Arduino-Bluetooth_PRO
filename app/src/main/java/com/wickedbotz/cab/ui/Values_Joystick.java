@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot.ui;
+package com.wickedbotz.cab.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
 
-import com.example.appbrinquedoopeniot.R;
+import com.wickedbotz.cab.R;
 
 public class Values_Joystick extends Activity {
 

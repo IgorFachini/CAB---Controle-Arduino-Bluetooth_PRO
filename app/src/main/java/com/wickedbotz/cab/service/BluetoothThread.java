@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot.service;
+package com.wickedbotz.cab.service;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;

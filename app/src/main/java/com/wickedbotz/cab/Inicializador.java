@@ -1,13 +1,13 @@
-package com.example.appbrinquedoopeniot;
+package com.wickedbotz.cab;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.example.appbrinquedoopeniot.ui.Extras_seguidor;
-import com.example.appbrinquedoopeniot.ui.ModoBotoes;
-import com.example.appbrinquedoopeniot.ui.ModoJoyStick;
+import com.wickedbotz.cab.ui.Extras_seguidor;
+import com.wickedbotz.cab.ui.ModoBotoes;
+import com.wickedbotz.cab.ui.ModoJoyStick;
 
 public class Inicializador extends Activity {
 

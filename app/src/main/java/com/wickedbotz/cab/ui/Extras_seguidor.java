@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot.ui;
+package com.wickedbotz.cab.ui;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -31,10 +31,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.appbrinquedoopeniot.service.BluetoothThread;
-import com.example.appbrinquedoopeniot.R;
-import com.example.appbrinquedoopeniot.common.InputFilterMinMax;
-import com.example.appbrinquedoopeniot.model.FollowLineModel;
+import com.wickedbotz.cab.service.BluetoothThread;
+import com.wickedbotz.cab.R;
+import com.wickedbotz.cab.common.InputFilterMinMax;
+import com.wickedbotz.cab.model.FollowLineModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;

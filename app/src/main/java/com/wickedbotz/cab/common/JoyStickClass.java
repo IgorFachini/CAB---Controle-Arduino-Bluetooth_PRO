@@ -1,8 +1,7 @@
-package com.example.appbrinquedoopeniot.common;
+package com.wickedbotz.cab.common;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;

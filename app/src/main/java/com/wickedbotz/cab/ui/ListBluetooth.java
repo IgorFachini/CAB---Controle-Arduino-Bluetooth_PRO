@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot.ui;
+package com.wickedbotz.cab.ui;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -20,8 +21,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.appbrinquedoopeniot.R;
-import com.example.appbrinquedoopeniot.adapter.BluetoothListAdapter;
+import com.wickedbotz.cab.R;
+import com.wickedbotz.cab.adapter.BluetoothListAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -155,16 +156,24 @@ public class ListBluetooth extends AppCompatActivity {
         ligarBluetooth();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unregisterReceiver(receberInfo);
+    }
+
     private void ordenarLista(ArrayList<BluetoothDevice> devices){
         //Comparador usado para ordenar uma lista em ordem alfabetica
         Comparator<BluetoothDevice> ALPHABETIC_ORDER_DEVICES = new Comparator<BluetoothDevice>() {
             @Override
-            public int compare(BluetoothDevice device1, BluetoothDevice device2) {
+            public int compare(@NonNull BluetoothDevice device1, @NonNull BluetoothDevice device2) {
                 return device1.getName().compareTo(device2.getName());
             }
         };
         //Ordena a lista em ordem Alfabetica
         Collections.sort(devices, ALPHABETIC_ORDER_DEVICES);
+
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot.adapter;
+package com.wickedbotz.cab.adapter;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;

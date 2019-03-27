@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot.ui;
+package com.wickedbotz.cab.ui;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.appbrinquedoopeniot.R;
+import com.wickedbotz.cab.R;
 
 public class InfoFragment extends DialogFragment {
 	Button googleBtn, googlePlayBtn, facebookBtn;

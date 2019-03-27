@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot.model;
+package com.wickedbotz.cab.model;
 
 /**
  * Created by latitude on 01/03/2017.

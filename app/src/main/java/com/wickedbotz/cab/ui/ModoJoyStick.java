@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot.ui;
+package com.wickedbotz.cab.ui;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,9 +27,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.appbrinquedoopeniot.service.BluetoothThread;
-import com.example.appbrinquedoopeniot.R;
-import com.example.appbrinquedoopeniot.common.JoyStickClass;
+import com.wickedbotz.cab.service.BluetoothThread;
+import com.wickedbotz.cab.R;
+import com.wickedbotz.cab.common.JoyStickClass;
 
 @SuppressLint("WorldWriteableFiles")
 public class ModoJoyStick extends FragmentActivity {

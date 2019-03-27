@@ -1,4 +1,4 @@
-package com.example.appbrinquedoopeniot.common;
+package com.wickedbotz.cab.common;
 
 /**
  * Created by latitude on 10/01/2017.
@@ -6,10 +6,6 @@ package com.example.appbrinquedoopeniot.common;
 
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.support.v4.app.FragmentActivity;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class Util extends Activity {
 

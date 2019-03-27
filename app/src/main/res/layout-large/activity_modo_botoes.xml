@@ -7,7 +7,7 @@
     android:paddingLeft="8.0dip"
     android:paddingRight="8.0dip"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.appbrinquedoopeniot.ui.ModoBotoes" >
+    tools:context="com.wickedbotz.cab.ui.ModoBotoes" >
 
     <Button
         android:id="@+id/btnConectar"

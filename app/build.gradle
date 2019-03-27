@@ -5,7 +5,7 @@ android {
     compileOptions.encoding = 'windows-1251'
 
     defaultConfig {
-        applicationId "com.example.appbrinquedoopeniot"
+        applicationId "wickedbotz.cab"
         minSdkVersion 17
         targetSdkVersion 27
     }
